@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <title>Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000 - blag</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet" />-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="http://avi.im/theme/style.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://avi.im/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blag Full Atom Feed" />
+    <link href="http://avi.im/feeds/category/tutorial.atom.xml" type="application/atom+xml" rel="alternate" title="blag Categories Atom Feed" />
+  </head>
+  <body id="index" class="archive">
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://avi.im">blag</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-right">
+          <ul class="nav navbar-nav">
+            <li><a href="http://avi.im/about/">About</a></li>
+            <li><a href="http://avi.im/contact/">Contact</a></li>
+            <li><a href="http://avi.im/tags.html">tags</a></li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+    </nav>
+    <div class="container">
+    <section id="content" class="article content">
+      <header>
+        <h2 class="entry-title">
+          Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000
+        </h2>
+        
+        <div class="text-muted">Sun 10 May 2015</div>
+      </header>
+<!-- .entry-content -->
+      <div class="entry-content">
+        <h3>Note:</h3>
+<p>There are many ways to achieve this and in this tutorial I follow two flash method. </p>
+<h3>Preparation:</h3>
+<ul>
+<li>This guide assumes you are on stock firmware.</li>
+<li>If you are already on DD WRT or Tomato, ignore step 2 of procedure.</li>
+<li>Doesn't matter whether you are on Windows, Linux or Mac. Everything happens in browser</li>
+<li>Make sure you are connected to the router over one of WAN ports</li>
+<li>It doesn't matter which firmware version you are currently on. My router came with <code>V1.0.3.XX</code>, which I later upgraded to <code>V1.0.4.28_1.1.64</code>.</li>
+<li>Download these two files:<ol>
+<li>Tomato Initial CHK file (<code>.chk</code>), which upgrades your NetGear firmware to Tomato - <a href="http://tomato.groov.pl/download/K26ARM/Netgear%20R-series%20initial%20files/tomato-R7000-initial.chk">link</a>.</li>
+<li>XWRT TRX file (<code>.trx</code>), which upgrades Tomato to XVortex's AsusWRT-Merlin (the thing you finally want). Current latest version is <code>v378.53_0</code>. The zip file contains <code>.chk</code> and <code>.trx</code> files, you can ignore the <code>.chk</code> for this guide - <a href="http://mega.co.nz/#!lllgHBpT!oFGLRxwtkXgeijqgvDYRwbKh48gG9yGJLhsQefvJEGI">link</a>.</li>
+</ol>
+</li>
+</ul>
+<h3>Procedure:</h3>
+<ol>
+<li>Login to your router. Reset it to factory settings (<code>Advanced</code> &gt; <code>Administration</code> &gt; <code>Backup Settings</code> &gt; <code>Revert to factory default settings</code>).</li>
+<li>Flash the <code>.chk</code> file, after this procedure firmware will be upgraded to Tomato. (<code>Advanced</code> &gt; <code>Administration</code> &gt; <code>Router Update</code> &gt; <code>Browse</code> &gt; <code>Apply</code>)</li>
+<li>Now flash the <code>.trx</code> file which upgrades to XVortex's Firmware. You will see 'successful' message at end.</li>
+<li>Now if your router is not being detected, do manual reboot of the router.</li>
+<li>Connect to the router, if there are any IP conflicts it will be displayed. It should now show you the Installation Wizard. Either follow it or skip it. But it will require you to set the WPA creds.</li>
+<li>Do another reset (<code>Administration</code> &gt; <code>Restore/Save/Upload Setting</code> &gt; <code>Factory default</code> OR <code>http://&lt;router_ip_address&gt;/Advanced_SettingBackup_Content.asp</code>).</li>
+<li>Repeat step 4 if necessary.</li>
+<li>Follow the installation wizard at your wish, same as in step 5.</li>
+</ol>
+<p>That's all!! :D</p>
+<h3>Post installation:</h3>
+<p>To set TX power to 30%-50%, for both bands:</p>
+<ol>
+<li>Go to <code>Wireless</code> &gt; <code>Professional</code> &gt; <code>Tx power adjustment</code> (or <code>http://&lt;router_ip_address&gt;/Advanced_WAdvanced_Content.asp</code>).</li>
+<li>Set <code>Tx power adjustment</code> to 30% - 50%.</li>
+<li>Change <code>Band</code> to 5Ghz and do step 2 again.</li>
+</ol>
+<p>Hope this helps.</p>
+<h3>Credits:</h3>
+<p>Check <a href="http://www.linksysinfo.org/index.php?threads/asuswrt-merlin-on-netgear-r7000.71108/page-5#post-261251">this thread</a> where I originally wrote this tutorial. Thanks to @XVortex for this fine firmware. Thanks to @slidermike who actually introduced me to this, or else I was going to try Tomato. Thanks to @ManiDhillon, @freibooter and @mito for answering my noobie questions and giving me instructions.</p>
+      </div>
+<!-- /.entry-content -->
+      <footer class="post-info text-muted">
+        <button type="button" class="btn btn-default">          
+          <a href="http://avi.im/category/tutorial.html"><div class="fa fa-lg fa-folder-open"></div> Tutorial</a>
+        </button>
+        <button type="button" class="btn btn-default">
+          <a href="http://avi.im/tag/r7000.html"><div class="fa fa-lg fa-tag"></div> r7000</a>
+        </button>
+        <button type="button" class="btn btn-default">
+          <a href="http://avi.im/tag/asus-wrt.html"><div class="fa fa-lg fa-tag"></div> asus-wrt</a>
+        </button>
+      </footer>
+      <!-- /.post-info -->
+    </section>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">&copy; <a href="http://avi.im">blag</a> powered by <a href="http://getpelican.com/">pelican</a> and Skyfall</p>
+      </div>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
