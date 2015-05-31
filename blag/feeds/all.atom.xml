@@ -184,7 +184,12 @@
 &lt;p&gt;On May 30, 2015, around ~10pm, I checked again. The exploit was finally &lt;a href="https://archive.is/fWEDq"&gt;fixed&lt;/a&gt;:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="partial fix" src="http://avi.im/blag/images/2015/hacking-gaana/apifixed.png" width="99%" height="99%" /&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</summary><category term="hacking"></category><category term="python"></category></entry><entry><title>Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000</title><link href="http://avi.im/blag/2015/asus-wrt-merlin-on-netgear-r7000/" rel="alternate"></link><updated>2015-05-10T22:20:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2015-05-10:blag/2015/asus-wrt-merlin-on-netgear-r7000/</id><summary type="html">&lt;h3&gt;Note:&lt;/h3&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Gaana team took almost 3 weeks to fix the exploit. Would they have treated this exploit differently, if I had made this public since day one? Also, it was not easy for me to reach out to Gaana and it took them a day to reply. It was difficult to find their contact information from their site, I wonder do they even have security team for handling exploits. Usually companies have emails like security@company.com for such things. Gaana mentions no such things.&lt;/p&gt;
+&lt;p&gt;It's not like Gaana is a new kid in the block, it was launched in 2010 by &lt;a href="http://en.wikipedia.org/wiki/Times_Internet"&gt;Times Internet&lt;/a&gt;, who run the largest websites of India - Times of India, The Economic Times, Indiatimes etc.&lt;/p&gt;
+&lt;p&gt;Well, Gaana is not an exception. A cursory search on Indian companies will tell you that, hardly any companies have such policies. Recent vulnerabilities found on Ola, Freecharge, Zopnow, FoodPanda etc make me more sceptical.&lt;/p&gt;
+&lt;p&gt;Questions to ponder: Is our private data really safe with Indian startups? Are web/app security practices completely being ignored, to win the race of 'first to be in the market'? Do companies really care about privacy of their users? or only about profits?&lt;/p&gt;</summary><category term="hacking"></category><category term="python"></category></entry><entry><title>Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000</title><link href="http://avi.im/blag/2015/asus-wrt-merlin-on-netgear-r7000/" rel="alternate"></link><updated>2015-05-10T22:20:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2015-05-10:blag/2015/asus-wrt-merlin-on-netgear-r7000/</id><summary type="html">&lt;h3&gt;Note:&lt;/h3&gt;
 &lt;p&gt;There are many ways to achieve this and in this tutorial I follow two flash method. &lt;/p&gt;
 &lt;h3&gt;Preparation:&lt;/h3&gt;
 &lt;ul&gt;
