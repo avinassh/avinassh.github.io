@@ -70,13 +70,11 @@
           An exploit on Gaana.com gave me access to their entire User Database
         </h2>
         
-        <div class="text-muted">May 12, 2015</div>
+        <div class="text-muted">May 31, 2015</div>
       </header>
 <!-- .entry-content -->
       <div class="entry-content">
-        <p><strong>EDIT(28/May/2015)</strong>: You have probably read about Gaana hack in recent news. But this exploit is different than the one found by <a href="http://www.thegeekbyte.com/4841/gaana-com-database-compromised-by-hackers/">MakMan and g00n</a> and was found much earlier. Mak Man's hack includes SQL Injection, but the vulnerability I found could have been exploited by anyone with a browser and internet connection. No expertise required at all, that's what makes this even more ugly.</p>
-<hr />
-<p>Ever since <a href="http://blog.mclov.in/path-uploads-your-entire-iphone-address-book-to-its-servers-22HGO5EiLJKhWZPKdMOgdw">Path - iPhone Address Book fiasco</a> I have developed a habit of doing MITM and checking app's internal APIs. Yesterday I was playing around with <a href="http://gaana.com">Gaana.com</a>'s <a href="https://itunes.apple.com/in/app/gaana-unlimited-bollywood/id585270521?mt=8">app</a>, I came across this vulnerability. Gaana was started by The Times Group, the same guys behind the national daily newspaper The Times Of India. </p>
+        <p>Ever since <a href="http://blog.mclov.in/path-uploads-your-entire-iphone-address-book-to-its-servers-22HGO5EiLJKhWZPKdMOgdw">Path - iPhone Address Book fiasco</a> I have developed a habit of doing MITM and checking app's internal APIs. Yesterday I was playing around with <a href="http://gaana.com">Gaana.com</a>'s <a href="https://itunes.apple.com/in/app/gaana-unlimited-bollywood/id585270521?mt=8">app</a>, I came across this vulnerability. Gaana was started by The Times Group, the same guys behind the national daily newspaper The Times Of India. </p>
 <p>I came across an internal API which gave me access to their entire user database (more than 11 Million records). Surprisingly, it did not require any cookies, authentication, session id or anything. Anyone with an URL would have had access to Gaana's User DB. </p>
 <p>I got access to following data of each user:</p>
 <ul>
@@ -159,22 +157,21 @@
 <p>And they finally replied to me next day and asked me to DM, which <a href="http://avi.im/blag/images/2015/hacking-gaana/dm.png">I did</a>.</p>
 </li>
 <li>
-<p>Finally their dev emailed on May 13th evening and I sent him all the details, including SQL dump (so that he takes me seriously):</p>
-<p><img alt="first email" src="http://avi.im/blag/images/2015/hacking-gaana/firstemail.png" width="99%" height="99%" /></p>
+<p>Finally someone from Gaana emailed me on May 13th evening and I sent him all the details, including SQL dump (so that he takes me seriously).</p>
 </li>
 <li>
 <p>On May 17th (i.e. 5 days after the exploit), I emailed them again asking why it wasn't fixed yet. Their site was up and running, but exploit wasn't fixed. I was worried if someone else figures this out and makes the data public.</p>
-<p>Their developer called me again and assured me that it will be fixed soon and it's taking time because of API backward compatibility issues.</p>
+<p>Gaana called me again and assured me that it will be fixed soon and it's taking time because of API backward compatibility issues.</p>
 </li>
 <li>
 <p>Sometime on May 23-24rd (i.e. ~10 days after exploit) the vulnerability was partially fixed. Now you were able to get full name and profile pic. However API was still openly accessible, over HTTP, in the browser:</p>
 <p><img alt="partial fix" src="http://avi.im/blag/images/2015/hacking-gaana/partialfix.png" width="99%" height="99%" /></p>
 </li>
 <li>
-<p>On 28th May, <a href="http://www.thegeekbyte.com/4841/gaana-com-database-compromised-by-hackers/">MakMan and g00n</a> found another exploit using SQL injection. And Gaana was down for maintenance for most of the day. In evening, I received a call from Gaana's business head and was assured that it will be fixed asap. I was hoping they will fix it, as it's been already two weeks. </p>
+<p>On 28th May, <a href="http://www.thegeekbyte.com/4841/gaana-com-database-compromised-by-hackers/">MakMan and g00n</a> found another exploit using SQL injection. And Gaana was down for maintenance for most of the day. In evening, I received a call from Gaana and was assured that it will be fixed asap. I was hoping they will fix it, as it's been already two weeks. </p>
 </li>
 <li>
-<p>But I was wrong. It wasn't <a href="https://archive.is/uuifC">fixed</a>. It made me angry and furious because they took SQL injection pretty seriously because it was all over news and hurting their PR. I was thinking, how they would have reacted to this issue, if I had made this whole thing public from beginning. I <a href="https://twitter.com/iavins/status/604150195442475009">tweeted</a> to Gaana CEO for his email ID, I never received any reply. But then...I found his email from the very database I had hacked and sent another email.</p>
+<p>But I was wrong. It wasn't <a href="https://archive.is/uuifC">fixed</a> and I sent another email.</p>
 </li>
 <li>
 <p>On May 30 2015, evening <a href="https://archive.is/7EaEx">Gaana</a> <a href="http://avi.im/blag/images/2015/hacking-gaana/gaanadown.png">was down</a> again, so was the <a href="https://archive.is/ksPRd">API end point</a>. Are they finally fixing the exploit I found? </p>
