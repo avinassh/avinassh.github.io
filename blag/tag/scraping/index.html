@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
   <head>
-    <title>Contact - blag</title>
+    <title>blag - scraping</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
@@ -18,6 +18,7 @@
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://avi.im/blag/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blag Full Atom Feed" />
+    <link href="http://avi.im/blag/feeds/tag/scraping.atom.xml" type="application/atom+xml" rel="alternate" title="blag Tags Atom Feed" />
   </head>
   <body id="index" class="archive">
     <!--[if lt IE 7]>
@@ -36,32 +37,49 @@
         </div>
         <div class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li><a href="http://avi.im/blag/about/">About</a></li>
-            <li class="active"><a href="http://avi.im/blag/contact/">Contact</a></li>
-            <li><a href="http://avi.im/blag/tags.html">tags</a></li>
+            <li ><a href="http://avi.im/blag/archives.html">archives</a></li>
+            <li ><a href="http://avi.im/blag/tags.html">tags</a></li>           
+            <li><a href="http://avi.im/blag/about/">about</a></li>
+            <li><a href="http://avi.im/blag/projects/">projects</a></li>
+            <!--
+            <li class="active"active><a href="http://avi.im/blag/tags.html">tags</a></li>
+            -->
           </ul>
         </div>
         <!-- /.navbar-collapse -->
       </div>
     </nav>
     <div class="container">
-    <section id="content" class="article content">
-      <header>
-        <h2 class="entry-title">
-          Contact
-        </h2>
-        
-      </header>
-<!-- .entry-content -->
-      <div class="entry-content">
-        <p>The best way to contact me is via <a href="http://scr.im/avii">email</a></p>
+    <section id="content" class="content">
+      <ol class="breadcrumb">
+        <li><a href="http://avi.im/blag"><div class="fa fa-lg fa-home"></div><span class="hidden-xs"> Home</span></a></li>
+        <li><a href="http://avi.im/blag/tags.html"><div class="fa fa-lg fa-tags"></div> Tags <span class="badge">10</span></a></li>
+        <li class="active"><div class="fa fa-lg fa-tag"></div> scraping <span class="badge">1</span></li>
+      </ol>
+      <div class="row">
+        <div class="col-sm-3">
+          <span class="text-muted article-date">October 18, 2014</span>
+        </div>
+        <div class="col-sm-9">
+          <p>
+            <a class="article-title" href="http://avi.im/blag/2014/scraping-javascript-website-python/" rel="bookmark" title="Permalink to Scraping Javascript page using Python">Scraping Javascript page using Python</a>
+            <br/>
+            Simple code example to illustrate scraping a javascript driven website, using Python and Dryscape.
+          </p>
+        </div>
       </div>
-<!-- /.entry-content -->
-    </section>    
+      <div>
+        <ul class="pager">
+          <!--- <li class="previous disabled"><a>&larr; Previous</a></li> -->
+          <!--- <li class="next disabled"><a>Next &rarr;</a></li> -->
+        </ul>
+      </div>
+    </section>
+    <!-- content -->
     </div>
     <footer class="footer">
       <div class="container">
-        <p class="footer-text">&copy; <a href="http://avi.im/blag">blag</a> powered by <a href="http://getpelican.com/">pelican</a> and Skyfall</p>
+        <p class="footer-text">&copy; <a href="http://avi.im/blag">blag</a> powered by <a href="http://getpelican.com/">pelican</a> with <a href="https://github.com/avinassh/skyfall">skyfall</a> theme.</p>
       </div>
     </footer>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

