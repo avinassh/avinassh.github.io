@@ -74,11 +74,11 @@
       </header>
 <!-- .entry-content -->
       <div class="entry-content">
-        <p>Last week Amazon India had a Treasure Hunt contest which ran for a whole week. The contest was simple, from 10am to 7pm, every hour Amazon would display a clue (image) and you had to guess the product. That particular product would be on sale for ₹1, which also included shipping cost anywhere in India. The contest was app only i.e. image also would be displayed in the app and you had to buy using the app.</p>
+        <p>Last week Amazon India had a Treasure Hunt contest which ran for a whole week. The contest was simple, from 10am to 6pm, every hour Amazon would display a clue (image) and you had to guess the product. That particular product would be on sale for ₹1, which also included shipping cost anywhere in India. The contest was app only i.e. image also would be displayed in the app and you had to buy using the app.</p>
 <p><img src="http://avi.im/blag/images/2015/amazon-treasure/makeymakey1.jpg" alt="makey makey offer page" style="width: 50%;"/><img src="http://avi.im/blag/images/2015/amazon-treasure/makeymakey2.jpg" alt="makey makey cart" style="width: 50%;"/></p>
 <p>Above images show <a href="http://www.amazon.in/dp/B008SFLEPE/">Makey Makey</a> on promo.</p>
 <p>Problem was, too many people were participating in the contest and by the time you could guess the product, search it in the app and add to your cart, it would be out of stock. Because quantity of the product on sale was only one. So you had to be very very quick.</p>
-<p>Using <a href="https://mitmproxy.org/">MITM</a> I started monitoring the API calls. In one of the calls, I found out the request which was asking for the contest image:</p>
+<p>Using <a href="https://mitmproxy.org/">MITM</a>, I started monitoring the API calls. In one of the calls, I found out the request which was asking for the contest image:</p>
 <div class="highlight"><pre>https://images-eu.ssl-images-amazon.com/images/G/31/img13/mshop/treasure/clues-20/Clue5._UX828_SX828_V290896415_.png
 </pre></div>
 
