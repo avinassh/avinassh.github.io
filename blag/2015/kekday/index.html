@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <title>When is my Cake Day? - blag</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for Google -->
+    <meta name="author" content="avi" />
+ <meta name="description" content="<p>Using <code>praw</code> and <code>prawoauth2</code> to find when is my cake day on Reddit.</p>" />  <meta name="keywords" content="" /> 
+    <!-- for Facebook -->          
+    <meta property="og:title" content="When is my Cake Day?" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://avi.im/blag/2015/kekday/" />
+ <meta property="og:description" content="<p>Using <code>praw</code> and <code>prawoauth2</code> to find when is my cake day on Reddit.</p>" /> 
+    <!-- for Twitter -->
+    <meta name="twitter:title" content="When is my Cake Day?" />
+    <meta name="twitter:description" content="<p>Using <code>praw</code> and <code>prawoauth2</code> to find when is my cake day on Reddit.</p>" />
+    <meta name="twitter:card" content="<p>Using <code>praw</code> and <code>prawoauth2</code> to find when is my cake day on Reddit.</p>" />
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet" />-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="http://avi.im/blag/theme/style.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link href="http://avi.im/blag/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blag Full Atom Feed" />
+    <link href="http://avi.im/blag/feeds/category/tutorial.atom.xml" type="application/atom+xml" rel="alternate" title="blag Categories Atom Feed" />
+  </head>
+  <body id="index" class="archive">
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://avi.im/blag">blag</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-right">
+          <ul class="nav navbar-nav">
+            <li ><a href="http://avi.im/blag/archives.html">archives</a></li>
+            <li ><a href="http://avi.im/blag/tags.html">tags</a></li>           
+            <li><a href="http://avi.im/blag/about/">about</a></li>
+            <li><a href="http://avi.im/blag/projects/">projects</a></li>
+            <!--
+            <li><a href="http://avi.im/blag/tags.html">tags</a></li>
+            -->
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+    </nav>
+    <div class="container">
+    <section id="content" class="article content">
+      <header>
+        <h2 class="entry-title">
+          When is my Cake Day?
+        </h2>
+        
+        <div class="text-muted">November 20, 2015</div>
+      </header>
+<!-- .entry-content -->
+      <div class="entry-content">
+        <p><a href="https://kekday.herokuapp.com"><img src="http://avi.im/blag/images/2015/kekday/kekday.png" alt="kek" style="width: 90%;"/></a></p>
+<p>Reddit gives all the user info in a handy JSON at this URL: <code>https://www.reddit.com/user/&lt;username here&gt;/about.json</code></p>
+<p>example: <a href="https://www.reddit.com/user/spez/about.json">https://www.reddit.com/user/spez/about.json</a></p>
+<p>The <code>created_utc</code> field in <code>data</code> is the date of user's registration aka Cake Day in <a href="https://en.wikipedia.org/wiki/Unix_time">unix epoch</a> format (in UTC) and we can easily convert that to readable format: </p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">time</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%D&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="mi">1118030400</span><span class="p">))</span>
+<span class="s">&#39;06/06/05&#39;</span>
+</pre></div>
+
+
+<p>Using <a href="http://python-requests.org">Python Requests</a>, we can turn this into a handy function:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">def</span> <span class="nf">get_my_cake_day</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;https://www.reddit.com/user/{}/about.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">created_at</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="s">&#39;created_utc&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%D&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="n">created_at</span><span class="p">))</span>
+</pre></div>
+
+
+<p>Though above function will work, but soon it will start throwing HTTP 429 error i.e Too Many Requests. Thing is, Reddit doesn't really like when someone tries to fetch the data like this. The requests are made directly on Reddit servers without using the API. Now if you have want to find cake day of hundreds of users, you cannot use this method.</p>
+<p>Solution? Use <a href="https://www.reddit.com/dev/api">Reddit's API</a>. In Python, we will use <a href="https://github.com/praw-dev/praw">praw</a> and <a href="https://github.com/avinassh/prawoauth2">prawoauth2</a>. praw is a Python wrapper for Reddit's API and prawoauth2 helps dealing with <a href="https://github.com/reddit/reddit/wiki/OAuth2">OAuth2</a>.</p>
+<p>Let's start by installing praw:</p>
+<div class="highlight"><pre>pip install praw
+</pre></div>
+
+
+<p>Now we can convert the <code>get_my_cake_day</code> to praw version and get the user details like this:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">praw</span>
+
+<span class="n">reddit_client</span> <span class="o">=</span> <span class="n">praw</span><span class="o">.</span><span class="n">Reddit</span><span class="p">(</span><span class="n">user_agent</span><span class="o">=</span><span class="s">&#39;my amazing cake day bot&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_my_cake_day</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
+    <span class="n">redditor</span> <span class="o">=</span> <span class="n">reddit_client</span><span class="o">.</span><span class="n">get_redditor</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%D&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="n">redditor</span><span class="o">.</span><span class="n">created_utc</span><span class="p">))</span>
+</pre></div>
+
+
+<p>Above code pretty much self explanatory. What if the user doesn't exist or shadowbanned? In such cases, praw throws an exception: <code>praw.errors.NotFound</code>. Lets modify <code>get_my_cake_day</code> to catch this:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">get_my_cake_day</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">redditor</span> <span class="o">=</span> <span class="n">reddit_client</span><span class="o">.</span><span class="n">get_redditor</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%D&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="n">redditor</span><span class="o">.</span><span class="n">created_utc</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">praw</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">NotFound</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;User does not exist or shadowbanned&#39;</span>
+</pre></div>
+
+
+<p>This is better compared to earlier version and we will stop getting rate limit errors often. Also, praw will handle such cases and makes requests again to fetch the data. But what if we want to increase the limit?</p>
+<p>The above requests are not authenticated, meaning Reddit does not recognise your app. However, if we register this app in Reddit and let Reddit know, then requests limits will increase. So to authenticate our app over Oauth2, we will use prawoauth2. Lets install it first:</p>
+<div class="highlight"><pre>pip install prawoauth2
+</pre></div>
+
+
+<p>Follow the simple steps <a href="https://prawoauth2.readthedocs.org/usage_guide.html">here</a> to register your app on Reddit. Once done, you will get <code>app_token</code> and <code>app_secret</code>. Then you need to get <code>access_token</code> and <code>refresh_token</code>. You could use this handy <a href="https://github.com/avinassh/prawoauth2/blob/master/examples/halflife3-bot/onetime.py"><code>onetime.py</code></a> script. For detailed instructions check the documentation of <a href="https://prawoauth2.readthedocs.org">prawoauth2</a>. You should never make <code>app_token</code>, <code>app_secret</code>, <code>access_token</code> and <code>refresh_token</code> public and never commit them to version control. Keep them always secret.</p>
+<p>Here is the complete script using prawoauth2:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">praw</span>
+
+<span class="kn">from</span> <span class="nn">secret</span> <span class="kn">import</span> <span class="p">(</span><span class="n">app_key</span><span class="p">,</span> <span class="n">app_secret</span><span class="p">,</span> <span class="n">access_token</span><span class="p">,</span> <span class="n">refresh_token</span><span class="p">,</span>
+                    <span class="n">user_agent</span><span class="p">,</span> <span class="n">scopes</span><span class="p">)</span>
+
+<span class="n">reddit_client</span> <span class="o">=</span> <span class="n">praw</span><span class="o">.</span><span class="n">Reddit</span><span class="p">(</span><span class="n">user_agent</span><span class="o">=</span><span class="s">&#39;my amazing cakeday bot&#39;</span><span class="p">)</span>
+<span class="n">oauth_helper</span> <span class="o">=</span> <span class="n">PrawOAuth2Mini</span><span class="p">(</span><span class="n">reddit_client</span><span class="p">,</span> <span class="n">app_key</span><span class="o">=</span><span class="n">app_key</span><span class="p">,</span>
+                              <span class="n">app_secret</span><span class="o">=</span><span class="n">app_secret</span><span class="p">,</span>
+                              <span class="n">access_token</span><span class="o">=</span><span class="n">access_token</span><span class="p">,</span>
+                              <span class="n">refresh_token</span><span class="o">=</span><span class="n">refresh_token</span><span class="p">,</span> <span class="n">scopes</span><span class="o">=</span><span class="n">scopes</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_my_cake_day</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">redditor</span> <span class="o">=</span> <span class="n">reddit_client</span><span class="o">.</span><span class="n">get_redditor</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%D&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="n">redditor</span><span class="o">.</span><span class="n">created_utc</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">praw</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">NotFound</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;User does not exists or shadowbanned&#39;</span>
+</pre></div>
+
+
+<p>Again, pretty much self explanatory. If your tokens are correct and once <code>PrawOAuth2Mini</code> is initialized properly, there will be no issues with the app and you will have twice as many requests as compared to unauthenticated version.</p>
+<p>Want to see above app in action? Check this - <a href="https://kekday.herokuapp.com">kekday</a>. The <a href="https://github.com/avinassh/kekday">app is open source</a> and released under MIT License.</p>
+      </div>
+<!-- /.entry-content -->
+      <footer class="post-info text-muted">
+        <button type="button" class="btn btn-default">          
+          <a href="http://avi.im/blag/category/tutorial"><div class="fa fa-lg fa-folder-open"></div> Tutorial</a>
+        </button>
+        <button type="button" class="btn btn-default">
+          <a href="http://avi.im/blag/tag/python/"><div class="fa fa-lg fa-tag"></div> python</a>
+        </button>
+        <button type="button" class="btn btn-default">
+          <a href="http://avi.im/blag/tag/reddit/"><div class="fa fa-lg fa-tag"></div> reddit</a>
+        </button>
+        <button type="button" class="btn btn-default">
+          <a href="http://avi.im/blag/tag/praw/"><div class="fa fa-lg fa-tag"></div> praw</a>
+        </button>
+        <button type="button" class="btn btn-default">
+          <a href="http://avi.im/blag/tag/prawoauth2/"><div class="fa fa-lg fa-tag"></div> prawoauth2</a>
+        </button>
+      </footer>
+      <!-- /.post-info -->
+    <!-- Comment BEGIN -->
+    <div id="isso_thread_div"></div>
+    <script data-isso="//isso-avinassh.rhcloud.com/" src="//posativ.org/isso/api/js/embed.min.js"></script>
+    <section id="isso-thread"></section>    
+    <noscript>Please enable JavaScript to view the <a href="http://posativ.org/isso/">comments powered by Isso.</a></noscript>
+    <!-- Comment END -->
+    </section>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">&copy; <a href="http://avi.im/blag">blag</a> powered by <a href="http://getpelican.com/">pelican</a> with <a href="https://github.com/avinassh/skyfall">skyfall</a> theme.</p>
+      </div>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
