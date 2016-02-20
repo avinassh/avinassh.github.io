@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blag</title><link href="http://avi.im/blag/" rel="alternate"></link><link href="http://avi.im/blag/feeds/category/code.atom.xml" rel="self"></link><id>http://avi.im/blag/</id><updated>2016-02-19T23:03:00+05:30</updated><entry><title>Git/Github fork-pull request-update cycle</title><link href="http://avi.im/blag/2016/git-fork-cycle-github/" rel="alternate"></link><updated>2016-02-19T23:03:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-02-19:blag/2016/git-fork-cycle-github/</id><summary type="html">&lt;p&gt;Lets say there is a project called &lt;code&gt;python&lt;/code&gt; and you want to contribute. So you should fork &lt;code&gt;python&lt;/code&gt; project and ALWAYS create a separate branch for the patch/feature you are working on and NEVER commit on the master branch of forked repo.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blag</title><link href="http://avi.im/blag/" rel="alternate"></link><link href="http://avi.im/blag/feeds/category/code.atom.xml" rel="self"></link><id>http://avi.im/blag/</id><updated>2016-02-20T17:03:00+05:30</updated><entry><title>Catching SIGTERM in Python</title><link href="http://avi.im/blag/2016/sigterm-in-python/" rel="alternate"></link><updated>2016-02-20T17:03:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-02-20:blag/2016/sigterm-in-python/</id><summary type="html">&lt;p&gt;I needed a very simple SIGTERM handler in a script I was working on. It is very simple to do so in Python, add a handler method and 'register' it. &lt;/p&gt;
+&lt;p&gt;First define a handler method:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;def sigterm_handler(signal, frame):
+    # this method defines the handler i.e. what to do
+    # when you receive a SIGTERM
+    pass
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And register the handler:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# Register the handler and let the process know that 
+# there is a handler for SIGTERM
+signal.signal(signal.SIGTERM, sigterm_handler)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Here's a simple script, if it receives &lt;code&gt;kill&lt;/code&gt; then it saves current state and exits gracefully. Here's a full working code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;signal&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;sigterm_handler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;signal&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c"&gt;# save the state here or do whatever you want&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;booyah! bye bye&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;signal&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;signal&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;signal&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SIGTERM&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sigterm_handler&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Run the above script and send KILL, like&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;kill&lt;/span&gt; &amp;lt;PID here&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;it will print &lt;code&gt;'booyah! bye bye'&lt;/code&gt; in terminal.&lt;/p&gt;
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;p&gt;Python 3 docs on &lt;code&gt;signal&lt;/code&gt; - &lt;a href="https://docs.python.org/3.5/library/signal.html"&gt;link&lt;/a&gt;&lt;/p&gt;</summary><category term="python"></category><category term="process"></category></entry><entry><title>Git/Github fork-pull request-update cycle</title><link href="http://avi.im/blag/2016/git-fork-cycle-github/" rel="alternate"></link><updated>2016-02-19T23:03:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-02-19:blag/2016/git-fork-cycle-github/</id><summary type="html">&lt;p&gt;Lets say there is a project called &lt;code&gt;python&lt;/code&gt; and you want to contribute. So you should fork &lt;code&gt;python&lt;/code&gt; project and ALWAYS create a separate branch for the patch/feature you are working on and NEVER commit on the master branch of forked repo.&lt;/p&gt;
 &lt;p&gt;Lets call your forked repo as &lt;code&gt;python-forked&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Once you fork a project, add a git remote called &lt;code&gt;upstream&lt;/code&gt; (or whatever name you feel like using), which points to original repo. This remote will help you keep your project updated and in sync with original repo (from where you forked).&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;python-forked
