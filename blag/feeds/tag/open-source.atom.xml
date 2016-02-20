@@ -58,4 +58,12 @@
 &lt;p&gt;usually:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;# solve the conflicts
 $ git rebase --continue
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="git"></category><category term="github"></category><category term="open-source"></category></entry></feed>
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;References&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Syncing a Fork - &lt;a href="https://help.github.com/articles/syncing-a-fork/"&gt;link&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Merging an upstream repository into your fork - &lt;a href="https://help.github.com/articles/merging-an-upstream-repository-into-your-fork/"&gt;link&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;How to update a GitHub forked repository? - &lt;a href="http://stackoverflow.com/questions/7244321/how-to-update-a-github-forked-repository"&gt;link&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="git"></category><category term="github"></category><category term="open-source"></category></entry></feed>
