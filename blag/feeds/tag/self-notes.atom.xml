@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blag</title><link href="http://avi.im/blag/" rel="alternate"></link><link href="http://avi.im/blag/feeds/tag/self-notes.atom.xml" rel="self"></link><id>http://avi.im/blag/</id><updated>2015-12-18T14:03:00+05:30</updated><entry><title>Using uWSGI with Python 3</title><link href="http://avi.im/blag/2015/uwsgi-python3/" rel="alternate"></link><updated>2015-12-18T14:03:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2015-12-18:blag/2015/uwsgi-python3/</id><summary type="html">&lt;p&gt;Gevent does not have Python 3 support yet, but its available as a release candidate. So this will lead to problems if you use the latest stable Gevent with Python 3. Follow these simple steps to install uSWGI and Gevent properly for Python 3. &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Uninstall existing uWSGI:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip uninstall uwsgi
+pip3 uninstall uwsgi
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Install everything via &lt;code&gt;pip3&lt;/code&gt; and use Gevent v1.1rc3:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip install gevent==1.1rc3
+pip install uwsgi
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Note: Above instructions will be obsolete once Gevent stable has Python 3 support.&lt;/p&gt;</summary><category term="python"></category><category term="django"></category><category term="web"></category><category term="self-notes"></category></entry></feed>
