@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/avin
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://avi.im
+  * I am avin (https://keybase.io/avin) on keybase.
+  * I have a public key with fingerprint 1D2E 27B3 57DC 4A82 E811  5760 05D1 EE9B D243 C385
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101acbc246655dfb7448fd058c1f62d84503d50d95ee9d70c8fb235c6634944bbea0a",
+            "fingerprint": "1d2e27b357dc4a82e811576005d1ee9bd243c385",
+            "host": "keybase.io",
+            "key_id": "05d1ee9bd243c385",
+            "kid": "0101acbc246655dfb7448fd058c1f62d84503d50d95ee9d70c8fb235c6634944bbea0a",
+            "uid": "b745deebfbb4a45a61b29418ed992b19",
+            "username": "avin"
+        },
+        "service": {
+            "hostname": "avi.im",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1462943495,
+    "expire_in": 157680000,
+    "prev": "4a793ba15a2c1ddd9922d3f8e4f0176ffe19270471d4ba07165caf997c4f877f",
+    "seqno": 12,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.53
+Comment: https://keybase.io/crypto
+
+yMIaAnicrZJtSBRBGMfPNPUkqbRICnrZotIO2dmb2ZeDChIqErOIiMQ6ZnZmz01v
+99rbO7vEIipIUjBC+6CUBBG9QmURmWSSVAYVhVQERgilJWZUFFTQbC/0oa/Nl2Ge
++f9/838e5lZuui8nrTKQcSnQuqgv7d7NpoRvk3Qjq04gNk0JoTqhmv3cWA1lcTdc
+bVIhJIhABFgnugRlGSFqEAVC1aAiUnVgyBJVIRKDFIlUQ4xpVBF11SBSEOmyHIQa
+hIQwLGIhIBimFWFOzDEtl2MBlZikkCBSqA6xKjEVAKTIoogo4BxCJRjUgyrixio7
+7jl4OILjrNi0eY0fwr/i/av/z7kTP3HcjihjxCAEYoiwDIikQaAyqmkSAZonjDPH
+wlHG1ThpWkJ9QOCVpKkzb6heF39vi80od8Qc27V1u4bXqlw3FvIsbirmaWoZCf92
+h4lpUT48bkgyJ27alhACXKm7pocDUOZJeGYUENiOmOmwsOkp+DRVkS/vGZbkSIgV
+LUgwQFjSAaVecIkGDZVBQwSKbBgMaJIiQgVQSLCoABnp2NA0RYeGqiiG4PWz3bI5
+W+I5cYQz42bEwm7CYUJ9b09lhi8tx5c5cYL3q3w5/il//lqbk+3baz5eHpi5ughW
+juvnjoadE/6L3+fkS1+KyzeUzfh0e0/epJqswQMD+wsLMprmNu1oGFrx8cn89sUj
+uS+22kJErZgyHKX95ZGXj1oH/A0d/mtHSnH2msELZUXRvrP7wMH6AWVVf+bQqarW
+uz1ju3s7w2BJwexDZ+a9ehhKPGg5XFrSB0+ezP88q2LZwqejbG159buu5s2F9tXq
+Ne81H1ifuNtWEtt4dvKbkcyOnaQteX1i3vElY8ca1YCWeu6sMy4uqPENPet9Gx1r
+xmeWNXavG75yfmQB/Ro5vfayM34fFX3rBq+70lMrl975UGXV7iqvnTVtfEv7SOdU
+a1ue27Ji+ugPQ1s1Uw==
+=PYy6
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/avin
+
+==================================================================
