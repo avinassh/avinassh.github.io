@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blag</title><link href="http://avi.im/blag/" rel="alternate"></link><link href="http://avi.im/blag/feeds/category/code.atom.xml" rel="self"></link><id>http://avi.im/blag/</id><updated>2016-02-20T17:03:00+05:30</updated><entry><title>Catching SIGTERM in Python</title><link href="http://avi.im/blag/2016/sigterm-in-python/" rel="alternate"></link><updated>2016-02-20T17:03:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-02-20:blag/2016/sigterm-in-python/</id><summary type="html">&lt;p&gt;I needed a very simple SIGTERM handler in a script I was working on. It is very simple to do so in Python, add a handler method and 'register' it. &lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blag</title><link href="http://avi.im/blag/" rel="alternate"></link><link href="http://avi.im/blag/feeds/category/code.atom.xml" rel="self"></link><id>http://avi.im/blag/</id><updated>2016-05-12T19:20:00+05:30</updated><entry><title>Install Go / Golang on OS X El Capitan (10.11.x) using Homebrew</title><link href="http://avi.im/blag/2016/install-go-el-capitan/" rel="alternate"></link><updated>2016-05-12T19:20:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-05-12:blag/2016/install-go-el-capitan/</id><summary type="html">&lt;p&gt;Do the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew update
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew install go --with-cc-all
+
+&lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; Downloading https://homebrew.bintray.com/bottles/go-1.6.2.el_capitan.bottle.tar.gz
+Already downloaded: /Users/avi/Library/Caches/Homebrew/go-1.6.2.el_capitan.bottle.tar.gz
+&lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; Pouring go-1.6.2.el_capitan.bottle.tar.gz
+&lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; Caveats
+As of go 1.2, a valid GOPATH is required to use the &lt;span class="sb"&gt;`&lt;/span&gt;go get&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt;:
+  https://golang.org/doc/code.html#GOPATH
+
+You may wish to add the GOROOT-based install location to your PATH:
+  &lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$PATH&lt;/span&gt;:/usr/local/opt/go/libexec/bin
+&lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; Summary
+🍺  /usr/local/Cellar/go/1.6.2: 5,778 files, 325.3M
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As it says we need to set &lt;code&gt;GOPATH&lt;/code&gt; and also &lt;code&gt;GOROOT&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.go
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If then add this to your profile, &lt;code&gt;.bash_profile&lt;/code&gt; or &lt;code&gt;.zshrc&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt; go things&lt;/span&gt;
+&lt;span class="x"&gt;export GOPATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/.go&lt;/span&gt;
+&lt;span class="x"&gt;export GOROOT=/usr/local/opt/go/libexec&lt;/span&gt;
+&lt;span class="x"&gt;export PATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="x"&gt;:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;GOROOT&lt;/span&gt;&lt;span class="x"&gt;/bin:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="x"&gt;/bin&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Resources&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://github.com/Homebrew/homebrew-core/blob/9c867d598eee0f77350155c11f3ece6717c9026c/Formula/go.rb"&gt;Brew recipe&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://stackoverflow.com/a/28423229/1382297"&gt;This SO answer&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="golang"></category></entry><entry><title>Catching SIGTERM in Python</title><link href="http://avi.im/blag/2016/sigterm-in-python/" rel="alternate"></link><updated>2016-02-20T17:03:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-02-20:blag/2016/sigterm-in-python/</id><summary type="html">&lt;p&gt;I needed a very simple SIGTERM handler in a script I was working on. It is very simple to do so in Python, add a handler method and 'register' it. &lt;/p&gt;
 &lt;p&gt;First define a handler method:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;def sigterm_handler(signal, frame):
     # this method defines the handler i.e. what to do
