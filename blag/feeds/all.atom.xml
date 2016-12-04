@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blag</title><link href="http://avi.im/blag/" rel="alternate"></link><link href="http://avi.im/blag/feeds/all.atom.xml" rel="self"></link><id>http://avi.im/blag/</id><updated>2016-05-12T19:20:00+05:30</updated><entry><title>Install Go / Golang on OS X El Capitan (10.11.x) using Homebrew</title><link href="http://avi.im/blag/2016/install-go-el-capitan/" rel="alternate"></link><updated>2016-05-12T19:20:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-05-12:blag/2016/install-go-el-capitan/</id><summary type="html">&lt;p&gt;Do the following:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blag</title><link href="http://avi.im/blag/" rel="alternate"></link><link href="http://avi.im/blag/feeds/all.atom.xml" rel="self"></link><id>http://avi.im/blag/</id><updated>2016-12-04T19:08:00+05:30</updated><entry><title>Install Go / Golang on OS X El Capitan (10.11.x) using Homebrew</title><link href="http://avi.im/blag/2016/install-go-el-capitan/" rel="alternate"></link><updated>2016-12-04T19:08:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-05-12:blag/2016/install-go-el-capitan/</id><summary type="html">&lt;p&gt;Do the following:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew update
 &lt;span class="nv"&gt;$ &lt;/span&gt;brew install go --with-cc-all
 
@@ -30,6 +30,20 @@ You may wish to add the GOROOT-based install location to your PATH:
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h3&gt;Updating to/Installation of Go 1.7.x&lt;/h3&gt;
+&lt;p&gt;If you followed above methods and now want to update to 1.7.x, then do following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew update
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew upgrade go
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you are doing a fresh install, then do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew update
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew install go
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And set &lt;code&gt;GOPATH&lt;/code&gt; and &lt;code&gt;GOROOT&lt;/code&gt; like earlier.&lt;/p&gt;
 &lt;h3&gt;Resources&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="https://github.com/Homebrew/homebrew-core/blob/9c867d598eee0f77350155c11f3ece6717c9026c/Formula/go.rb"&gt;Brew recipe&lt;/a&gt;&lt;/li&gt;
