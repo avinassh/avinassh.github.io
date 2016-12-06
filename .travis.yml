@@ -23,7 +23,7 @@ script:
 - mv output blag
 - git add blag
 - git commit -F last_commit.txt
-- git push https://${GH_TOKEN}@github.com/avinassh/avinass.github.io.git master --quiet > /dev/null 2>&1
+- git push https://${GH_TOKEN}@github.com/avinassh/avinassh.github.io.git master --quiet > /dev/null 2>&1
 env:
   global:
     secure: QBu/nqhhsf2by/CDSd42F+rWEsPbxnVPzUJOY3o+WCdqQzHXpotyQMTewDwD84bGHh+S6jLl3yj5VzmLwsjENIQsuLxM2BemZsz9/SOA0iRRTY/EgpVLGxTd7Dl4yoQXraXL9CAtBovhxF7oT8dNIzvkipbv73FvnIhX3Qpa86M=
