@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-## Pelicon Config to be used in Development
+# Pelicon Config to be used in Development
 
 AUTHOR = u'avi'
 SITENAME = u'blag'
@@ -21,9 +21,9 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-# Feeds 
-FEEDS =  (('All posts', 'feeds/all.atom.xml'),
-          ('Category', 'feeds/category'),)
+# Feeds
+FEEDS = (('All posts', 'feeds/all.atom.xml'),
+         ('Category', 'feeds/category'),)
 
 # Social widget
 SOCIAL = (('twitter', 'http://twitter.com/iavins'),
@@ -34,7 +34,7 @@ DEFAULT_PAGINATION = 8
 # Uncomment following line if you want document-relative URLs when developing
 # RELATIVE_URLS = True
 
-## My Config mods start from here 
+# My Config mods start from here
 DEFAULT_CATEGORY = 'code'
 DEFAULT_DATE_FORMAT = '%B %d, %Y'
 THEME = "skyfall"
