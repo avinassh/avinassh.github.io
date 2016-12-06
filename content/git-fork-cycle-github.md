@@ -61,7 +61,7 @@ $ git rebase master
 
 You could also do `$ git rebase upstream/master` in last step to update the current patch branch. 
 
-### Update, merge and PR
+### Update, resolve conflicts and PR
 
 You have forked the project and maintainer has made some changes to the file you are also working on
 
