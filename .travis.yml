@@ -1,0 +1,29 @@
+language: python
+python:
+- '3.5'
+branches:
+  only:
+  - source
+install:
+- pip install -r requirements.txt
+script:
+- mkdir build_directory
+- cd build_directory
+- git clone https://github.com/avinassh/avinassh.github.io.git my_blog
+- cd my_blog
+- git clone https://github.com/avinassh/skyfall.git skyfall
+- git config user.email "hi@avi.im"
+- git config user.name "avi"
+- git checkout source
+- git pull
+- pelican -s publishconf.py -t skyfall -o output
+- git log --format=%B -n 1 > last_commit.txt
+- git checkout master
+- rm -r blag
+- mv output blag
+- git add blag
+- git commit -F last_commit.txt
+- git push https://${GH_TOKEN}@github.com/avinassh/pelican.git master --quiet
+env:
+  global:
+    secure: hu5Y7KaAURBp7vEJ/b0N2sV3nzlyR+SHyjs1RRDkuyHY1kxbNZGUl/RSwY6mTCetObPcW+tF4QbB6zsdXsJXgSLHlVdixtUErENIUupLX4vGXzSo6H2jMEcMu+xNDfbIl7wRJh3s2Ns5F+c4YF0UJJNZrHShJT57UbDBbgjwXwc=
