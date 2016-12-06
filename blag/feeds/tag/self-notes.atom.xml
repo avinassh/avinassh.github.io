@@ -18,4 +18,9 @@ pip install uwsgi
 
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Note: Above instructions will be obsolete once Gevent stable has Python 3 support.&lt;/p&gt;</summary><category term="python"></category><category term="django"></category><category term="web"></category><category term="self-notes"></category></entry></feed>
+&lt;p&gt;Note: Above instructions will be obsolete once Gevent stable has Python 3 support.&lt;/p&gt;
+&lt;h2&gt;Update 06/12/2016:&lt;/h2&gt;
+&lt;p&gt;Gevent now supports Python 3, so just do:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip3 install gevent
+pip3 install uwsgi
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category><category term="django"></category><category term="web"></category><category term="self-notes"></category></entry></feed>
