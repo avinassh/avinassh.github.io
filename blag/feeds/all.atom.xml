@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blag</title><link href="http://avi.im/blag/" rel="alternate"></link><link href="http://avi.im/blag/feeds/all.atom.xml" rel="self"></link><id>http://avi.im/blag/</id><updated>2016-12-04T19:08:00+05:30</updated><entry><title>Install Go / Golang on OS X El Capitan (10.11.x) using Homebrew</title><link href="http://avi.im/blag/2016/install-go-el-capitan/" rel="alternate"></link><published>2016-12-04T19:08:00+05:30</published><updated>2016-12-04T19:08:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-05-12:blag/2016/install-go-el-capitan/</id><summary type="html">&lt;p&gt;Do the following:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blag</title><link href="http://avi.im/blag/" rel="alternate"></link><link href="http://avi.im/blag/feeds/all.atom.xml" rel="self"></link><id>http://avi.im/blag/</id><updated>2016-12-06T19:03:00+05:30</updated><entry><title>Install Go / Golang on macOS Sierra (10.12.x) using Homebrew</title><link href="http://avi.im/blag/2016/install-go-sierra/" rel="alternate"></link><published>2016-12-06T19:03:00+05:30</published><updated>2016-12-06T19:03:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-12-06:blag/2016/install-go-sierra/</id><summary type="html">&lt;p&gt;Do the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew update
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew install go
+
+...
+&lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; Caveats
+As of go 1.2, a valid GOPATH is required to use the &lt;span class="sb"&gt;`&lt;/span&gt;go get&lt;span class="sb"&gt;`&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt;:
+  https://golang.org/doc/code.html#GOPATH
+
+You may wish to add the GOROOT-based install location to your PATH:
+  &lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$PATH&lt;/span&gt;:/usr/local/opt/go/libexec/bin
+&lt;span class="o"&gt;==&lt;/span&gt;&amp;gt; Summary
+🍺  /usr/local/Cellar/go/1.7.4: 6,438 files, 250.7M
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;As it says we need to set &lt;code&gt;GOPATH&lt;/code&gt; and also &lt;code&gt;GOROOT&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.go
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If then add this to your profile, &lt;code&gt;.bash_profile&lt;/code&gt; or &lt;code&gt;.zshrc&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt; go things&lt;/span&gt;
+&lt;span class="x"&gt;export GOPATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="x"&gt;/.go&lt;/span&gt;
+&lt;span class="x"&gt;export GOROOT=/usr/local/opt/go/libexec&lt;/span&gt;
+&lt;span class="x"&gt;export PATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="x"&gt;:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;GOROOT&lt;/span&gt;&lt;span class="x"&gt;/bin:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="x"&gt;/bin&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="golang"></category></entry><entry><title>Install Go / Golang on OS X El Capitan (10.11.x) using Homebrew</title><link href="http://avi.im/blag/2016/install-go-el-capitan/" rel="alternate"></link><published>2016-12-04T19:08:00+05:30</published><updated>2016-12-04T19:08:00+05:30</updated><author><name>avi</name></author><id>tag:avi.im,2016-05-12:blag/2016/install-go-el-capitan/</id><summary type="html">&lt;p&gt;Do the following:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew update
 &lt;span class="nv"&gt;$ &lt;/span&gt;brew install go --with-cc-all
 
