@@ -23,7 +23,4 @@ script:
 - mv output blag
 - git add blag
 - git commit -F last_commit.txt
-- git push https://${GH_TOKEN}@github.com/avinassh/pelican.git master --quiet
-env:
-  global:
-    secure: hu5Y7KaAURBp7vEJ/b0N2sV3nzlyR+SHyjs1RRDkuyHY1kxbNZGUl/RSwY6mTCetObPcW+tF4QbB6zsdXsJXgSLHlVdixtUErENIUupLX4vGXzSo6H2jMEcMu+xNDfbIl7wRJh3s2Ns5F+c4YF0UJJNZrHShJT57UbDBbgjwXwc=
+- git push https://${GH_TOKEN}@github.com/avinassh/avinassh.github.io.git master --quiet
