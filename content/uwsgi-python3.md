@@ -18,3 +18,10 @@ Gevent does not have Python 3 support yet, but its available as a release candid
         pip install uwsgi
 
 Note: Above instructions will be obsolete once Gevent stable has Python 3 support.
+
+## Update 06/12/2016:
+
+Gevent now supports Python 3, so just do:
+
+    pip3 install gevent
+    pip3 install uwsgi
