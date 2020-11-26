@@ -4,6 +4,13 @@ title = "blag"
 theme = "terminal"
 paginate = 8
 
+[permalinks]
+  posts = "/:year/:slug/"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
 [params]
   # dir name of your main content (default is `content/posts`).
   # the list of set content will show up on your index page (baseurl).
@@ -59,7 +66,7 @@ paginate = 8
     missingBackButtonLabel = "Back to home page"
 
     [languages.en.params.logo]
-      logoText = "Terminal"
+      logoText = "blag"
       logoHomeLink = "/"
 
     [languages.en.menu]
