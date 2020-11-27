@@ -1,9 +1,11 @@
-Title: Catching SIGTERM in Python
-Date: 2016-02-20 17:03
-Category: code
-Tags: python, process
-Slug: sigterm-in-python
-Summary: Simple code example to show catching SIGTERM in a Python script.
+---
+title: "Catching SIGTERM in Python"
+date: "2016-02-20T17:03:00+05:30"
+categories: ["code"]
+tags: ["python", "process"]
+slug: "sigterm-in-python"
+description: "Simple code example to show catching SIGTERM in a Python script."
+---
 
 I needed a very simple SIGTERM handler in a script I was working on. It is very simple to do so in Python, add a handler method and 'register' it. 
 

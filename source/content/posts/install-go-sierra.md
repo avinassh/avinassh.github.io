@@ -1,9 +1,11 @@
-Title: Install Go / Golang on macOS Sierra (10.12.x) using Homebrew
-Date: 2016-12-06 19:03
-Category: Code
-Tags: golang
-Slug: install-go-sierra
-Summary: Install Go v1.7.x on OS X 10.12.x with Homebrew.
+---
+title: "Install Go / Golang on macOS Sierra (10.12.x) using Homebrew"
+date: "2016-12-06T19:03:00+05:30"
+categories: ["code"]
+tags: ["golang"]
+slug: "install-go-sierra"
+description: "Install Go v1.7.x on OS X 10.12.x with Homebrew."
+---
 
 Do the following:
 

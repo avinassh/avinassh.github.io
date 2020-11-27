@@ -1,9 +1,11 @@
-Title: How I Am Maintaining Multiple Emails For Git On A Same Machine
-Date: 2015-08-01 22:20
-Category: Tutorial
-Tags: git
-Slug: multiple-git-emails
-Summary: In this simple tutorial I will show how to maintain multiple git emails on a same machine. And how to configure git emails per directory or per project.
+---
+title: "How I Am Maintaining Multiple Emails For Git On A Same Machine"
+date: "2015-08-01T22:20:00+05:30"
+categories: ["tutorial"]
+tags: ["git"]
+slug: "multiple-git-emails"
+description: "In this simple tutorial I will show how to maintain multiple git emails on a same machine. And how to configure git emails per directory or per project."
+---
 
 Every git commit is associated with two important data: your name and email. I don't want my personal email address associated with work related git commits and vice versa. First, to set the git email address system wide, you would run following:
 

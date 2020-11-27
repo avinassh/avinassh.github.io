@@ -1,9 +1,11 @@
-Title: Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000
-Date: 2015-05-10 22:20
-Category: Tutorial
-Tags: r7000, asus-wrt
-Slug: asus-wrt-merlin-on-netgear-r7000
-Summary: This tutorial will explain you how to flash Asus-WRT Merlin by XVortex on NetGear NightHawk R7000.
+---
+title: "Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000"
+date: "2015-05-10T22:20:00+05:30"
+categories: ["tutorial"]
+tags: ["r7000", "asus-wrt"]
+slug: "asus-wrt-merlin-on-netgear-r7000"
+description: "This tutorial will explain you how to flash Asus-WRT Merlin by XVortex on NetGear NightHawk R7000."
+---
 
 ### Note:
 There are many ways to achieve this and in this tutorial I follow two flash method. 

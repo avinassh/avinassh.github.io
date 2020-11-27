@@ -1,9 +1,11 @@
-Title: When is my Cake Day?
-Date: 2015-11-20 22:20
-Category: Tutorial
-Tags: python, reddit, praw, prawoauth2
-Slug: kekday
-Summary: Using `praw` and `prawoauth2` to find when is my cake day on Reddit.
+---
+title: "When is my Cake Day?"
+date: "2015-11-20T22:20:00+05:30"
+categories: ["tutorial"]
+tags: ["python", "reddit", "praw", "prawoauth2"]
+slug: "kekday"
+description: "Using `praw` and `prawoauth2` to find when is my cake day on Reddit."
+---
 
 <a href="https://kekday.herokuapp.com"><img src="{filename}/images/2015/kekday/kekday.png" alt="kek" style="width: 90%;"/></a>
 

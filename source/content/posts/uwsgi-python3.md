@@ -1,9 +1,11 @@
-Title: Using uWSGI with Python 3
-Date: 2015-12-18 14:03
-Category: code
-Tags: python, django, web, self-notes
-Slug: uwsgi-python3
-Summary: Simple steps to get uWSGI up and running in Python 3.
+---
+title: "Using uWSGI with Python 3"
+date: "2015-12-18T14:03:00+05:30"
+categories: ["code"]
+tags: ["python", "django", "web", "self-notes"]
+slug: "uwsgi-python3"
+description: "Simple steps to get uWSGI up and running in Python 3."
+---
 
 Gevent does not have Python 3 support yet, but its available as a release candidate. So this will lead to problems if you use the latest stable Gevent with Python 3. Follow these simple steps to install uSWGI and Gevent properly for Python 3. 
 
