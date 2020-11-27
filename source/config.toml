@@ -7,9 +7,27 @@ paginate = 8
 [permalinks]
   posts = "/:year/:slug/"
 
+[markup.goldmark.renderer]
+unsafe= true
+
 [taxonomies]
   category = "categories"
   tag = "tags"
+
+[markup]
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = ""
+    lineAnchors = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    style = "monokai"
+    tabWidth = 4
+    pygmentsUseClasses=true
 
 [params]
   # dir name of your main content (default is `content/posts`).
@@ -17,7 +35,7 @@ paginate = 8
   contentTypeName = "posts"
 
   # ["orange", "blue", "red", "green", "pink"]
-  themeColor = "green"
+  themeColor = "blue"
 
   # if you set this to 0, only submenu trigger will be visible
   showMenuItems = 2
@@ -29,7 +47,7 @@ paginate = 8
   fullWidthTheme = false
 
   # center theme with default width
-  centerTheme = false
+  centerTheme = true
 
   # set a custom favicon (default is a `themeColor` square)
   # favicon = "favicon.ico"
