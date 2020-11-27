@@ -1,0 +1,3 @@
+[submodule "source/themes/terminal"]
+	path = source/themes/terminal
+	url = https://github.com/avinassh/hugo-theme-terminal.git
