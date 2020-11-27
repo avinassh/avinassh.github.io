@@ -1,107 +1,189 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
-    <title>Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000 - blag</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+<head>
+  
+    <title>Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000 :: Terminal</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Note: There are many ways to achieve this and in this tutorial I follow two flash method.
+Preparation:  This guide assumes you are on stock firmware. If you are already on DD WRT or Tomato, ignore step 2 of procedure. Doesn&amp;rsquo;t matter whether you are on Windows, Linux or Mac. Everything happens in browser Make sure you are connected to the router over one of WAN ports It doesn&amp;rsquo;t matter which firmware version you are currently on." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="http://avi.im/2015/asus-wrt-merlin-on-netgear-r7000/" />
 
-    <!-- for Google -->
-    <meta name="author" content="avi" />
- <meta name="description" content="<p>This tutorial will explain you how to flash Asus-WRT Merlin by XVortex on NetGear NightHawk R7000.</p>" />  <meta name="keywords" content="" /> 
-    <!-- for Facebook -->          
-    <meta property="og:title" content="Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="http://avi.im/blag/2015/asus-wrt-merlin-on-netgear-r7000/" />
- <meta property="og:description" content="<p>This tutorial will explain you how to flash Asus-WRT Merlin by XVortex on NetGear NightHawk R7000.</p>" /> 
-    <!-- for Twitter -->
-    <meta name="twitter:title" content="Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000" />
-    <meta name="twitter:description" content="<p>This tutorial will explain you how to flash Asus-WRT Merlin by XVortex on NetGear NightHawk R7000.</p>" />
-    <meta name="twitter:card" content="<p>This tutorial will explain you how to flash Asus-WRT Merlin by XVortex on NetGear NightHawk R7000.</p>" />
 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
-    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" rel="stylesheet" />-->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="http://avi.im/blag/theme/style.css" rel="stylesheet" />
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <link href="http://avi.im/blag/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blag Full Atom Feed" />
-    <link href="http://avi.im/blag/feeds/category/tutorial.atom.xml" type="application/atom+xml" rel="alternate" title="blag Categories Atom Feed" />
-  </head>
-  <body id="index" class="archive">
-    <!--[if lt IE 7]>
-        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="http://avi.im/blag">blag</a>
-        </div>
-        <div class="collapse navbar-collapse navbar-right">
-          <ul class="nav navbar-nav">
-            <li ><a href="http://avi.im/blag/archives.html">archives</a></li>
-            <li ><a href="http://avi.im/blag/tags.html">tags</a></li>           
-            <li><a href="http://avi.im/blag/about/">about</a></li>
-            <li><a href="http://avi.im/blag/projects/">projects</a></li>
-            <!--
-            <li><a href="http://avi.im/blag/tags.html">tags</a></li>
-            -->
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-      </div>
-    </nav>
-    <div class="container">
-    <section id="content" class="article content">
-      <header>
-        <h2 class="entry-title">
-          Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000
-        </h2>
+
+
+<link rel="stylesheet" href="http://avi.im/assets/style.css">
+
+  <link rel="stylesheet" href="http://avi.im/assets/blue.css">
+
+
+
+
+
+
+<link rel="apple-touch-icon" href="http://avi.im/img/apple-touch-icon-192x192.png">
+
+  <link rel="shortcut icon" href="http://avi.im/img/favicon/blue.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+
+  
+    <meta name="twitter:site" content="" />
+  
+    <meta name="twitter:creator" content="" />
+
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000">
+<meta property="og:description" content="This tutorial will explain you how to flash Asus-WRT Merlin by XVortex on NetGear NightHawk R7000." />
+<meta property="og:url" content="http://avi.im/2015/asus-wrt-merlin-on-netgear-r7000/" />
+<meta property="og:site_name" content="Terminal" />
+
+  
+    <meta property="og:image" content="http://avi.im/img/favicon/blue.png">
+  
+
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+  <meta property="article:section" content="tutorial" />
+
+
+  <meta property="article:published_time" content="2015-05-10 22:20:00 &#43;0530 IST" />
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="blue">
+
+
+<div class="container center headings--one-size">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    blag
+  </div>
+</a>
+
+    </div>
+    
+      <div class="menu-trigger">menu</div>
+    
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
         
-        <div class="text-muted">May 10, 2015</div>
-      </header>
-<!-- .entry-content -->
-      <div class="entry-content">
-        <h3>Note:</h3>
-<p>There are many ways to achieve this and in this tutorial I follow two flash method. </p>
-<h3>Preparation:</h3>
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/projects">Projects</a></li>
+        
+      
+      
+    
+
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/projects">Projects</a></li>
+      
+    
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="http://avi.im/2015/asus-wrt-merlin-on-netgear-r7000/">Flashing Asus-WRT Merlin by XVortex on NetGear NightHawk R7000</a></h1>
+  <div class="post-meta">
+    
+      <span class="post-date">
+        2015-05-10 
+      </span>
+    
+    
+  </div>
+
+  
+  <span class="post-tags">
+    
+    #<a href="http://avi.im/tags/r7000/">r7000</a>&nbsp;
+    
+    #<a href="http://avi.im/tags/asus-wrt/">asus-wrt</a>&nbsp;
+    
+  </span>
+  
+
+  
+
+  
+
+  <div class="post-content"><div>
+        <h3 id="note">Note:<a href="#note" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
+<p>There are many ways to achieve this and in this tutorial I follow two flash method.</p>
+<h3 id="preparation">Preparation:<a href="#preparation" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
 <ul>
 <li>This guide assumes you are on stock firmware.</li>
 <li>If you are already on DD WRT or Tomato, ignore step 2 of procedure.</li>
-<li>Doesn't matter whether you are on Windows, Linux or Mac. Everything happens in browser</li>
+<li>Doesn&rsquo;t matter whether you are on Windows, Linux or Mac. Everything happens in browser</li>
 <li>Make sure you are connected to the router over one of WAN ports</li>
-<li>It doesn't matter which firmware version you are currently on. My router came with <code>V1.0.3.XX</code>, which I later upgraded to <code>V1.0.4.28_1.1.64</code>.</li>
-<li>Download these two files:<ol>
+<li>It doesn&rsquo;t matter which firmware version you are currently on. My router came with <code>V1.0.3.XX</code>, which I later upgraded to <code>V1.0.4.28_1.1.64</code>.</li>
+<li>Download these two files:
+<ol>
 <li>Tomato Initial CHK file (<code>.chk</code>), which upgrades your NetGear firmware to Tomato - <a href="http://tomato.groov.pl/download/K26ARM/Netgear%20R-series%20initial%20files/tomato-R7000-initial.chk">link</a>.</li>
-<li>XWRT TRX file (<code>.trx</code>), which upgrades Tomato to XVortex's AsusWRT-Merlin (the thing you finally want). Current latest version is <code>v378.53_0</code>. The zip file contains <code>.chk</code> and <code>.trx</code> files, you can ignore the <code>.chk</code> for this guide - <a href="http://mega.co.nz/#!lllgHBpT!oFGLRxwtkXgeijqgvDYRwbKh48gG9yGJLhsQefvJEGI">link</a>.</li>
+<li>XWRT TRX file (<code>.trx</code>), which upgrades Tomato to XVortex&rsquo;s AsusWRT-Merlin (the thing you finally want). Current latest version is <code>v378.53_0</code>. The zip file contains <code>.chk</code> and <code>.trx</code> files, you can ignore the <code>.chk</code> for this guide - <a href="http://mega.co.nz/#!lllgHBpT!oFGLRxwtkXgeijqgvDYRwbKh48gG9yGJLhsQefvJEGI">link</a>.</li>
 </ol>
 </li>
 </ul>
-<h3>Procedure:</h3>
+<h3 id="procedure">Procedure:<a href="#procedure" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
 <ol>
 <li>Login to your router. Reset it to factory settings (<code>Advanced</code> &gt; <code>Administration</code> &gt; <code>Backup Settings</code> &gt; <code>Revert to factory default settings</code>).</li>
 <li>Flash the <code>.chk</code> file, after this procedure firmware will be upgraded to Tomato. (<code>Advanced</code> &gt; <code>Administration</code> &gt; <code>Router Update</code> &gt; <code>Browse</code> &gt; <code>Apply</code>)</li>
-<li>Now flash the <code>.trx</code> file which upgrades to XVortex's Firmware. You will see 'successful' message at end.</li>
+<li>Now flash the <code>.trx</code> file which upgrades to XVortex&rsquo;s Firmware. You will see &lsquo;successful&rsquo; message at end.</li>
 <li>Now if your router is not being detected, do manual reboot of the router.</li>
 <li>Connect to the router, if there are any IP conflicts it will be displayed. It should now show you the Installation Wizard. Either follow it or skip it. But it will require you to set the WPA creds.</li>
 <li>Do another reset (<code>Administration</code> &gt; <code>Restore/Save/Upload Setting</code> &gt; <code>Factory default</code> OR <code>http://&lt;router_ip_address&gt;/Advanced_SettingBackup_Content.asp</code>).</li>
 <li>Repeat step 4 if necessary.</li>
 <li>Follow the installation wizard at your wish, same as in step 5.</li>
 </ol>
-<p>That's all!! :D</p>
-<h3>Post installation:</h3>
+<p>That&rsquo;s all!! :D</p>
+<h3 id="post-installation">Post installation:<a href="#post-installation" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
 <p>To set TX power to 30%-50%, for both bands:</p>
 <ol>
 <li>Go to <code>Wireless</code> &gt; <code>Professional</code> &gt; <code>Tx power adjustment</code> (or <code>http://&lt;router_ip_address&gt;/Advanced_WAdvanced_Content.asp</code>).</li>
@@ -109,36 +191,69 @@
 <li>Change <code>Band</code> to 5Ghz and do step 2 again.</li>
 </ol>
 <p>Hope this helps.</p>
-<h3>Credits:</h3>
+<h3 id="credits">Credits:<a href="#credits" class="hanchor" ariaLabel="Anchor">&#8983;</a> </h3>
 <p>Check <a href="http://www.linksysinfo.org/index.php?threads/asuswrt-merlin-on-netgear-r7000.71108/page-5#post-261251">this thread</a> where I originally wrote this tutorial. Thanks to @XVortex for this fine firmware. Thanks to @slidermike who actually introduced me to this, or else I was going to try Tomato. Thanks to @ManiDhillon, @freibooter and @mito for answering my noobie questions and giving me instructions.</p>
-      </div>
-<!-- /.entry-content -->
-      <footer class="post-info text-muted">
-        <button type="button" class="btn btn-default">          
-          <a href="http://avi.im/blag/category/tutorial"><div class="fa fa-lg fa-folder-open"></div> Tutorial</a>
-        </button>
-        <button type="button" class="btn btn-default">
-          <a href="http://avi.im/blag/tag/r7000/"><div class="fa fa-lg fa-tag"></div> r7000</a>
-        </button>
-        <button type="button" class="btn btn-default">
-          <a href="http://avi.im/blag/tag/asus-wrt/"><div class="fa fa-lg fa-tag"></div> asus-wrt</a>
-        </button>
-      </footer>
-      <!-- /.post-info -->
-    <!-- Comment BEGIN -->
-    <div id="isso_thread_div"></div>
-    <script data-isso="//isso-avinassh.rhcloud.com/" src="//posativ.org/isso/api/js/embed.min.js"></script>
-    <section id="isso-thread"></section>    
-    <noscript>Please enable JavaScript to view the <a href="http://posativ.org/isso/">comments powered by Isso.</a></noscript>
-    <!-- Comment END -->
-    </section>
+
+      </div></div>
+
+  
+  
+<div class="pagination">
+    <div class="pagination__title">
+        <span class="pagination__title-h">Read other posts</span>
+        <hr />
     </div>
+    <div class="pagination__buttons">
+        
+        <span class="button previous">
+            <a href="http://avi.im/2015/hacking-gaana/">
+                <span class="button__icon">←</span>
+                <span class="button__text">I discovered a vulnerability on Gaana.com before the main POC hack</span>
+            </a>
+        </span>
+        
+        
+        <span class="button next">
+            <a href="http://avi.im/2014/install-uefi-windows-yosemite-dualboot/">
+                <span class="button__text">Install Windows 8 UEFI on Legacy BIOS with Clover (and Dual boot with Yosemite)</span>
+                <span class="button__icon">→</span>
+            </a>
+        </span>
+        
+    </div>
+</div>
+
+  
+
+  
+
+</div>
+
+  </div>
+
+  
     <footer class="footer">
-      <div class="container">
-        <p class="footer-text">&copy; <a href="http://avi.im/blag">blag</a> powered by <a href="http://getpelican.com/">pelican</a> with <a href="https://github.com/avinassh/skyfall">skyfall</a> theme.</p>
+  <div class="footer__inner">
+    
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="http://gohugo.io">Hugo</a></span>
+    
+        <span>:: Theme made by <a href="https://twitter.com/panr">panr</a></span>
       </div>
-    </footer>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  </body>
+  </div>
+</footer>
+
+<script src="http://avi.im/assets/main.js"></script>
+<script src="http://avi.im/assets/prism.js"></script>
+
+
+
+
+
+
+
+  
+</div>
+
+</body>
 </html>
