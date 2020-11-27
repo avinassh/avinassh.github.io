@@ -1,10 +1,12 @@
-Title: Install Go / Golang on OS X El Capitan (10.11.x) using Homebrew
-Date: 2016-05-12 19:20
-Modified: 2016-12-04 19:08
-Category: Code
-Tags: golang
-Slug: install-go-el-capitan
-Summary: Install Go v1.6.2. on OS X 10.11.x with Homebrew.
++++
+title = "Install Go / Golang on OS X El Capitan (10.11.x) using Homebrew"
+date = "2016-05-12T19:20:00+05:30"
+lastmod = "2016-12-04T19:08:00+05:30"
+categories = ["code"]
+tags = ["golang"]
+slug = "install-go-el-capitan"
+description = "Install Go v1.6.2. on OS X 10.11.x with Homebrew."
++++
 
 Do the following:
 
